@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org" layout:decorator="layout/main">
+
+<head>
+    <title>Agreement :: Program</title>
+    <link href="/css/program-breadcrumbs.css?version=1.0" th:href="@{/css/program-breadcrumbs.css?version=1.0}" rel="stylesheet"/>
+    <link href="/css/editor.css" th:href="@{/css/editor.css}" rel="stylesheet"/>
+    <style>
+        .borderless tbody tr td, .borderless tbody tr th, .borderless thead tr th {
+            border: none;
+        }
+    </style>
+
+</head>
+
+<body th:with="page='agreement'">
+
+<section layout:fragment="content" ng-app="sportsRegApp">
+    <div class="container body-container">
+
+        <div layout:include="layout/common-fragment :: program-breadcrumbs"></div>
+
+        <div class="panel panel-primary" ng-controller="AgreementAndPolicyController"
+             ng-cloak="">
+
+            <div class="panel-heading"><span class="text-uppercase">Program Agreement and Policy</span></div>
+
+            <div class="panel-body">
+            	
+                <input type="hidden" name="programId" id="programId" th:value="${program.id}"/>
+
+                <div class="panel panel-default" style="margin-top: 5px">
+                    <div class="panel-heading">
+                        <span class="text-uppercase">
+                            <strong>Agreements and Policies to Program</strong>
+                        </span>
+                    </div>
+
+                    <div class="alert alert-danger" ng-show="errors.length>0">
+                        <button type="button" class="close">×</button>
+                        <p ng-repeat="error in errors">{{error}}</p>
+                    </div>
+
+                    <div class="panel-body">
+                        <table class="table table-bordered table-condensed">
+                            <tr ng-repeat="agreement in program.agreements">
+                                <td style="margin-left: 30px">
+                                    <strong>{{agreement.title}}</strong> <br/>
+                                    Agreement
+                                    <!--<span ng-if="agreement.mustBeAgreed === true"> | Registrant must agree</span>-->
+                                </td>
+                                <td style="width: 10%; vertical-align:middle;">
+                                    <button type="button" class="btn btn-default btn-sm"
+                                            ng-click="removeAgreementFromProgram(agreement)">
+                                        <span class="glyphicon glyphicon-remove"></span> Remove
+                                    </button>
+                                </td>
+                            </tr>
+
+                            <tr ng-repeat="policy in program.policies">
+                                <td style="margin-left: 30px">
+                                    <strong>{{policy.title}}</strong> <br/>
+                                    Policy
+                                </td>
+
+                                <td style="width: 10%; vertical-align:middle;">
+                                    <button type="button" class="btn btn-default btn-sm"
+                                            ng-click="removePolicyFromProgram(policy)">
+                                        <span class="glyphicon glyphicon-remove"></span> Remove
+                                    </button>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+                <div ng-controller="AgreementController">
+
+                    <div class="panel panel-default" style="margin-top: 5px">
+                        <div class="panel-heading">
+
+                            <div class="btn-group pull-right">
+                                <a class="btn btn-default btn-xs"
+                                   ng-click="addNewAgreementToOrganization()">
+                                    <span class="glyphicon glyphicon-plus-sign"></span></a>
+                            </div>
+
+                            <span class="text-uppercase"><strong>Agreements</strong></span>
+                        </div>
+
+                        <div class="panel-body">
+                        
+                        	<div class="alert alert-success" ng-show="alertAgreementSuccess">
+			                    <button type="button" class="close" data-ng-click="switchBool('alertAgreementSuccess')">×</button>
+			                    <strong>Done! </strong> <span ng-bind-html="successMessage"/>
+			                </div>
+			
+			                <div class="alert alert-danger" ng-show="alertAgreementFailure">
+			                    <button type="button" class="close" data-ng-click="switchBool('alertAgreementFailure')">×</button>
+			                    <strong>Error! </strong> <span ng-bind-html="errorMessage"/>
+			                </div>
+                        	
+
+                            <div style="margin: 20px">
+                                <div ng-show="!agreements.length"> No agreement found! Add one?</div>
+                            </div>
+
+                            <table class="table table-bordered table-condensed">
+
+                                <tr ng-repeat="agreement in agreements">
+
+                                    <td style="margin-left: 10px">
+                                        <div style="margin-left: 20px">
+                                            <p><strong><span class="text-info"> {{agreement.title}}</span></strong></p>
+                                        </div>
+                                    </td>
+
+                                    <td style="width: 10%; vertical-align:middle;">
+
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-default btn-sm"
+                                                    ng-click="editAgreement(agreement)"><span
+                                                    class="glyphicon glyphicon-edit"></span> Edit
+                                            </button>
+
+                                            <button type="button" class="btn btn-default btn-sm dropdown-toggle"
+                                                    data-toggle="dropdown">
+                                                <span class="caret"></span>
+                                            </button>
+
+                                            <ul class="dropdown-menu" role="menu">
+                                                <li role="presentation">
+                                                    <a role="menuitem"
+                                                       ng-click="addAgreementToProgram(agreement)">
+                                                        <span class="glyphicon glyphicon-plus-sign"></span>
+                                                        &nbsp;&nbsp;Add To Program</a>
+                                                </li>
+                                                <li class="divider" role="presentation"></li>
+                                                <li role="presentation">
+                                                    <a role="menuitem" ng-click="editAgreement(agreement)"><span
+                                                            class="glyphicon glyphicon-edit"></span>&nbsp;
+                                                        &nbsp;Edit
+                                                        Agreement</a>
+                                                </li>
+
+                                                <li role="presentation">
+                                                    <a role="menuitem"
+                                                       ng-really-click="deleteAgreement(agreement.id)"
+                                                       item="policy">
+                                                        <span class="glyphicon glyphicon-trash"></span>&nbsp;
+                                                        &nbsp;Delete Agreement
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                            </table>
+
+                        </div>
+                    </div>
+
+                </div>
+
+                <div ng-controller="PolicyController">
+
+                    <div class="panel panel-default" style="margin-top: 5px">
+                        <div class="panel-heading">
+
+                            <div class="btn-group pull-right">
+                                <a class="btn btn-default btn-xs"
+                                   ng-click="addNewPolicy()">
+                                    <span class="glyphicon glyphicon-plus-sign"></span></a>
+                            </div>
+
+                            <span class="text-uppercase"><strong>Policy</strong></span>
+                        </div>
+
+                        <div class="panel-body">
+                        	<div class="alert alert-success" ng-show="alertPolicySuccess">
+			                    <button type="button" class="close" data-ng-click="switchBool('alertPolicySuccess')">×</button>
+			                    <strong>Done! </strong> <span ng-bind-html="successMessage"/>
+			                </div>
+			
+			                <div class="alert alert-danger" ng-show="alertPolicyFailure">
+			                    <button type="button" class="close" data-ng-click="switchBool('alertPolicyFailure')">×</button>
+			                    <strong>Error! </strong> <span ng-bind-html="errorMessage"/>
+			                </div>
+                        
+                            <div style="margin: 20px">
+                                <span ng-show="!policies.length"
+                                      style="margin-left: 20px"> No policy found! Add one?</span>
+                            </div>
+
+                            <table class="table table-bordered table-condensed">
+
+                                <tr ng-repeat="policy in policies">
+                                    <td style="margin-left: 10px">
+                                        <div style="margin-left: 20px">
+                                            <p><strong><span class="text-info"> {{policy.title}}</span></strong></p>
+                                        </div>
+                                    </td>
+
+                                    <td style="width: 10%; vertical-align:middle;">
+
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-default btn-sm"
+                                                    ng-click="editPolicy(policy)"><span
+                                                    class="glyphicon glyphicon-edit"></span> Edit
+                                            </button>
+                                            <button type="button" class="btn btn-default btn-sm dropdown-toggle"
+                                                    data-toggle="dropdown">
+                                                <span class="caret"></span>
+                                            </button>
+                                            <ul class="dropdown-menu" role="menu">
+                                                <li role="presentation">
+                                                    <a role="menuitem"
+                                                       ng-click="addPolicyToProgram(policy)">
+                                                        <span class="glyphicon glyphicon-plus-sign"></span>
+                                                        &nbsp;&nbsp;Add To Program</a>
+                                                </li>
+                                                <li class="divider" role="presentation"></li>
+                                                <li role="presentation">
+                                                    <a role="menuitem" ng-click="editPolicy(policy)"><span
+                                                            class="glyphicon glyphicon-edit"></span>&nbsp; &nbsp;Edit
+                                                        Policy</a>
+                                                </li>
+                                                <li role="presentation">
+                                                    <a role="menuitem" ng-really-click="deletePolicy(policy.id)"
+                                                       item="policy">
+                                                        <span class="glyphicon glyphicon-trash"></span>&nbsp; &nbsp;Delete
+                                                        Policy
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel-footer clearfix">
+
+                <div class="pull-left">
+                    <a th:if="${program != null and program.id != null}" href="#"
+                       th:href="@{/program/create/__${program.id}__/participant}" class="btn btn-warning">
+                        <span class="glyphicon glyphicon-circle-arrow-left"></span> Back</a>
+                </div>
+
+                <div class="pull-right">
+
+                    <button type="submit" class="btn btn-success" ng-click="moveToNextPage()">Continue <span
+                            class="glyphicon glyphicon-circle-arrow-right"></span></button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+<section layout:fragment="custom-scripts">
+    <script src="webjars/angular/1.3.15/angular.min.js" th:src="@{/webjars/angular/1.3.15/angular.min.js}"></script>
+    <script src="/js/ui-bootstrap-tpls-0.12.1.min.js" th:src="@{/js/ui-bootstrap-tpls-0.12.1.min.js}"></script>
+    <script src="/js/app.js" th:src="@{/js/app.js}"></script>
+    <script src="/js/showErrors.js" th:src="@{/js/showErrors.js}"></script>
+    <script src="/js/editor.js" th:src="@{/js/editor.js}"></script>
+    <script src="/js/directives/delete-confirmation.js" th:src="@{/js/directives/delete-confirmation.js}"></script>
+    <script th:src="@{/js/controllers/agreement-and-policy-controller.js?version=1.1}"></script>
+    <script th:src="@{/js/service/agreement.service.js}"></script>
+    <script th:src="@{/js/service/policy.service.js}"></script>
+    <script th:src="@{/js/service/program.service.js?version=1.0}"></script>
+    <script src="/js/underscore.js" th:src="@{/js/underscore.js}"></script>
+    <script src="/js/controllers/editor-controller.js" th:src="@{/js/controllers/editor-controller.js}"></script>
+
+</section>
+
+</body>
+</html>

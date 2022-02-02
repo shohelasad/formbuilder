@@ -1,0 +1,321 @@
+/*Navigation*/
+.navbar-inverse .navbar-nav > li > a {
+    transition: all .4s ease-in;
+}
+
+.navbar-wrapper {
+    margin: 0;
+}
+
+.navbar-wrapper .navbar {
+    border-radius: 0;
+}
+
+/*Changing Header Image*/
+.img-heading {
+    background: #fff url(../images/court02.jpg) no-repeat top center;
+    background-size: cover;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 282px;
+    display: inline-block;
+    z-index: -1;
+    margin-bottom: 250px;
+}
+
+/*Search Bar*/
+.form-control {
+    opacity: .6;
+}
+
+.form-control:hover, .form-control:focus {
+    opacity: 1;
+}
+
+.input-group .form-control:last-child,
+.input-group-addon:last-child,
+.input-group-btn:last-child >
+.btn, .input-group-btn:last-child > .btn-group > .btn,
+.input-group-btn:last-child > .dropdown-toggle, .input-group-btn:first-child >
+.btn:not(:first-child), .input-group-btn:first-child >
+.btn-group:not(:first-child) > .btn {
+    border-radius: 0;
+}
+
+.btn-info {
+    background-color: #006699;
+    border-color: #006699;
+    color: #fff;
+}
+
+.input-group .form-control:first-child, .input-group-addon:first-child,
+.input-group-btn:first-child > .btn, .input-group-btn:first-child >
+.btn-group > .btn, .input-group-btn:first-child > .dropdown-toggle,
+.input-group-btn:last-child > .btn:not(:last-child):not(.dropdown-toggle),
+.input-group-btn:last-child > .btn-group:not(:last-child) > .btn {
+    border-radius: 0;
+}
+
+/*Transparent Page Title Section*/
+.page-title {
+    position: relative;
+    z-index: 2;
+    background: rgba(0, 0, 0, 0.6);
+    margin-top: 30px;
+}
+
+.page-title .h1 {
+    font-weight: 600;
+    text-transform: uppercase;
+    color: #fff;
+    margin: 0;
+    padding: 10px 0 10px 10px;
+    font-size: 28px;
+    text-shadow: -2px 2px 4px #000;
+    display: inline-block;
+}
+
+.page-title .h1.deactive {
+    text-transform: uppercase;
+    color: #4a4b4c;
+    margin: 0;
+    padding: 10px 0 10px 10px;
+    font-size: 30px;
+    transition: all .4s ease-in;
+}
+
+.page-title .h1.deactive:hover {
+    text-transform: uppercase;
+    color: #539409;
+    margin: 0;
+    padding: 10px 0 10px 10px;
+    font-size: 30px;
+}
+
+/*Table Section*/
+.panel-body {
+    padding: 15px;
+}
+
+.panel-primary .panel-heading {
+    border: none;
+}
+
+.panel-primary {
+    border-color: #cccccc;
+
+}
+
+.panel-primary .panel-heading {
+    background-color: #468300;
+    color: #fff;
+
+}
+
+.panel-heading {
+
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+}
+
+.table {
+    position: relative;
+    z-index: 2;
+    border: none;
+}
+
+.table > thead > tr > td.info, .table > tbody > tr > td.info, .table > tfoot > tr > td.info, .table > thead > tr > th.info, .table > tbody > tr > th.info, .table > tfoot > tr > th.info, .table > thead > tr.info > td, .table > tbody > tr.info > td, .table > tfoot > tr.info > td, .table > thead > tr.info > th, .table > tbody > tr.info > th, .table > tfoot > tr.info > th {
+    background-color: #468300;
+    color: #fff;
+    border-right: none;
+    border-left: none;
+    border-bottom: none;
+    text-transform: uppercase;
+    font-weight: 300;
+    font-size: 1.1em;
+    vertical-align: middle;
+}
+
+a:link {
+    color: #006699;
+}
+
+a:hover {
+    color: #5a5a5a;
+}
+
+/*Table Subheading Section*/
+/* Removed legend & border style - Added subheading/h3 */
+.panel-subheading .h3 {
+    margin: 0;
+    background-color: #E2E2E2;
+    font-weight: 600;
+    text-transform: uppercase;
+    padding: 10px 0 10px 15px;
+}
+
+.h3 {
+    font-size: 14px;
+    color: #000;
+}
+
+/*Footer Section*/
+.pager li > a, .pager li > span {
+    background-color: #fff;
+    border: 0;
+    display: inline-block;
+    padding: 5px 14px;
+}
+
+#about {
+    width: 100%;
+    background-color: #076690;
+    color: #fff;
+    padding: 15px 0;
+}
+
+#about a {
+    color: #fff;
+}
+
+.formreleaf-footer {
+    padding-top: 20px;
+    padding-bottom: 20px;
+    margin-top: 50px;
+    color: #767676;
+    text-align: center;
+    border-top: 1px solid #e5e5e5;
+    background-color: #076690;
+}
+
+.formreleaf-footer-links {
+    padding-left: 0;
+    margin-top: 20px
+}
+
+.formreleaf-footer-links li {
+    display: inline;
+    padding: 0 2px;
+    color: #fff;
+}
+
+.formreleaf-footer-links li a:visited {
+    color: #fffae7 !important;
+}
+
+.formreleaf-footer-links li a:active {
+    color: #fff !important;
+}
+
+.formreleaf-footer-links li a {
+    color: #fff !important;
+}
+
+.formreleaf-footer-links li:first-child {
+    padding-left: 0
+}
+
+@media (min-width: 768px) {
+    .formreleaf-footer p {
+        margin-bottom: 0
+    }
+}
+
+.formreleaf-social {
+    margin-bottom: 20px;
+    text-align: center
+}
+
+.formreleaf-btn {
+    font-weight: 600;
+    text-transform: uppercase;
+    color: #fff;
+    margin: 0;
+    padding: 10px 0 10px 10px;
+    font-size: 28px;
+    display: inline-block;
+}
+
+ .color-box{
+     margin-top: 20px;
+     padding-left:17px;
+ }
+.color-box p.extra{
+    padding-top:5px;
+}
+.color-box strong{
+    font-size:16px;
+    padding-right:5px;
+    font-family:CuprumFFU, "Trebuchet MS",Arial,sans-serif;
+}
+.color-box .shadow{
+    margin:0;
+}
+
+.info-tab{
+    width:36px;height:50px;
+    float:left;
+    margin-left:-21px;
+    position:relative;
+    top:6px;
+    background:url("../images/sprite.png") no-repeat;
+}
+.note-box, .warning-box, .tip-box{
+    padding:0 15px 15px 25px;
+}
+.note-box{
+    color:#144261;
+    background:#d5e9f6;
+}
+
+.sprite{
+    background:url("../images/sprite.png") no-repeat scroll 0 0 transparent;;
+}
+.note-icon{
+    background-position:0 0;
+}
+.warning-icon{
+    background-position:0 -60px;
+}
+.tip-icon{
+    background-position:0 -120px;
+}
+/*
+-----------------------
+Link style for Boxes
+---------------------
+*/
+.note-box code, .note-box a{
+    color:#4d85a4;
+}
+.warning-box code, .warning-box a{
+    color:#913944;
+}
+.warning-box a:hover{
+    color:#000000;
+}
+.tip-box code, .tip-box a{
+    color:#4d8721;
+}
+.tip-box a:hover{
+    color:#000000;
+}
+.color-box .shadow{
+    margin:0;
+}
+
+.shadow{
+    background:#F7F8F9;
+    padding:3px;
+    margin:10px 0;
+}
+
+.body-container{
+    margin-top: 151px;
+}
+
+#custom-search-input{
+    margin-top: -46px;
+}

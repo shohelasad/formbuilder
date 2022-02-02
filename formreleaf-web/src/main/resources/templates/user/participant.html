@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org" layout:decorator="layout/main">
+
+<head>
+    <title>Participants</title>
+</head>
+
+<body>
+
+<section layout:fragment="content" ng-app="sportsRegApp" ng-controller="ParticipantController" ng-cloak="">
+    <div class="container body-container">
+
+        <div class="page-title">
+            <h1 class="h1">Participant Information</h1>
+        </div>
+        <div class="row">
+            <div class="col-md-3">
+                <div layout:include="layout/common-fragment :: sidebar"></div>
+            </div>
+            <div class="col-md-9">
+                <div class="panel panel-primary">
+                    <input id="profile" type="hidden" th:value="${profile}"/>
+
+                    <div class="panel-heading contains-buttons">
+
+                        <div class="btn-group pull-right">
+                            <a type="button" href="#" class="btn btn-default btn-xs"
+                               ng-click="addNewItemModal(profile)">
+                                <span class="glyphicon glyphicon-plus"></span>
+                            </a>
+                        </div>
+
+                        <p class="text-uppercase"> {{profile}} </p>
+                    </div>
+
+                    <div class="panel-body">
+
+                        <div class="alert alert-success" ng-show="alert_contact_show">
+                            <button type="button" class="close" data-ng-click="switchBool('alert_contact_show')">×
+                            </button>
+                            <strong>Done!</strong> {{successDeletedMessage}}
+                        </div>
+
+                        <table class="table table-bordered table-condensed" style="margin-top: 20px">
+
+                            <tbody>
+                            <tr ng-repeat="participant in items">
+                                <td style="margin-left: 50px margin-top: 20px">
+                                    <strong>{{participant.name}}</strong>
+                                </td>
+
+                                <td style="width: 20%; vertical-align:middle;">
+                                    <button type="button" class="btn btn-default btn-xs"
+                                            ng-click="editItem(participant)">
+                                        <span class="glyphicon glyphicon-edit"> </span> Edit
+                                    </button>
+
+                                    <button type="button" class="btn btn-default btn-xs"
+                                            ng-really-click="deleteItem(participant.id);">
+                                        <span class="glyphicon glyphicon-remove"> </span> Remove
+                                    </button>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+
+<section layout:fragment="custom-scripts">
+
+    <script src="/js/controllers/profile-controller.js" th:src="@{/js/controllers/profile-controller.js}"></script>
+    <script src="/js/service/profile.service.js" th:src="@{/js/service/profile.service-0.1.js}"></script>
+    <script src="/js/underscore.js" th:src="@{/js/underscore.js}"></script>
+
+</section>
+
+</body>
+</html>

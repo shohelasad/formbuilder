@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org" layout:decorator="layout/main">
+
+<head>
+    <title>Registrants</title>
+
+</head>
+
+<body>
+
+<section layout:fragment="content">
+
+    <div class="container" style="margin-top: 65px">
+
+        <div id="custom-search-input">
+            <form method="get" th:action="@{/program/registrant/search}">
+                <div class="input-group col-md-12">
+                    <input type="text" class="form-control input-lg" name="q" id="q" th:value="*{q}"
+                           placeholder="Type registrant name or keyword to find a registrant."/>
+                    <span class="input-group-btn">
+                        <button class="btn btn-info btn-lg" type="submit">
+                            <i class="glyphicon glyphicon-search"></i>
+                        </button>
+                    </span>
+                </div>
+            </form>
+        </div>
+
+        <div th:if="${message}" class="alert alert-info">
+            <p th:text="${message}"></p>
+        </div>
+
+        <div class="page-title">
+            <h1 class="h1">ALL REGISTRANTS</h1>
+        </div>
+
+        <table class="table table-hover table-bordered">
+            <thead>
+            <tr class="info text-uppercase">
+                <th>Person</th>
+                <th>Email</th>
+                <th>Gender</th>
+                <th>Birth date</th>
+                <th>Home phone</th>
+                <th>Cell phone</th>
+                <th>Registrations</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="people, iterStat : ${page.content}" th:class="${iterStat.odd}? 'odd'">
+                <th>
+                    <a th:href="@{/program/registrations?name=__${people.person}__}">
+                        <span th:text="${people.person}"></span>
+                    </a>
+                </th>
+                <th th:text="${people.email}"></th>
+                <th style="text-align: center" th:text="${people.gender}"></th>
+                <th style="text-align: center" th:if="${people.dateOfBirth != null}" th:text="${people.dateOfBirth}"></th>
+                <th style="text-align: center" th:text="${people.homePhone}"></th>
+                <th style="text-align: center" th:text="${people.cellPhone}"></th>
+                <th style="text-align: center" th:text="${people.registrationCount}"></th>
+            </tr>
+            </tbody>
+        </table>
+        <div layout:include="layout/common-fragment :: pagination"></div>
+    </div>
+</section>
+
+<div layout:fragment="custom-scripts">
+
+</div>
+
+</body>
+</html>

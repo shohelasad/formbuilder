@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org" layout:decorator="layout/main">
+
+<head>
+    <title>Create Organization</title>
+</head>
+
+<body>
+<div layout:fragment="content">
+    <div class="container body-container">
+
+        <div class="page-title">
+            <h1 class="h1"> Create new Organization Account</h1>
+        </div>
+
+        <div class="panel panel-primary">
+            <div class="panel-heading"><span class="text-uppercase">Create Organization Account</span></div>
+
+            <form class="form-horizontal centered" role="form" th:action="@{/admin/organization/registration}"
+                  th:object="${signupForm}" method="post" data-toggle="validator">
+                <div class="panel-body">
+
+                    <div th:if="${message}" class="alert alert-info">
+                        <p th:text="${message}"></p>
+                    </div>
+
+                    <div class="form-group required">
+                        <label for="email" class="col-sm-3 control-label"
+                               th:text="#{label.registrationForm.email}">email</label>
+
+                        <div class="col-sm-4">
+                            <input type="email" required="required"
+                                   class="form-control" id="email"
+                                   placeholder="Email Address" th:field="*{email}"/>
+                        </div>
+                        <p class="text-danger"
+                           th:if="${#fields.hasErrors('email')}">
+                            <span th:errors="*{email}">Required</span>
+                        </p>
+                    </div>
+
+                    <div class="form-group required">
+                        <label class="col-sm-3 control-label"
+                               th:text="#{label.registrationForm.firstName}">firstname</label>
+
+                        <div class="col-sm-4">
+                            <input type="text" required="required" class="form-control"
+                                   placeholder="First Name" th:field="*{firstName}"/>
+                        </div>
+                        <p class="text-danger"
+                           th:if="${#fields.hasErrors('firstName')}">
+                            <span th:errors="*{firstName}">Required</span>
+                        </p>
+                    </div>
+
+                    <div class="form-group required">
+                        <label class="col-sm-3 control-label"
+                               th:text="#{label.registrationForm.lastName}">lastname</label>
+
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control" required="required"
+                                   placeholder="Last Name" th:field="*{lastName}"/>
+                        </div>
+                        <p class="text-danger"
+                           th:if="${#fields.hasErrors('lastName')}">
+                            <span th:errors="*{lastName}">Required</span>
+                        </p>
+                    </div>
+
+                    <div class="form-group required">
+                        <label class="col-sm-3 control-label"
+                               th:text="#{label.registrationForm.password}">password</label>
+
+                        <div class="col-sm-4">
+                            <input type="password" min="6" max="32" class="form-control" required="required"
+                                   placeholder="Password" th:field="*{password}"/>
+                        </div>
+                        <p class="text-danger"
+                           th:if="${#fields.hasErrors('password')}">
+                            <span th:errors="*{password}">Required</span>
+                        </p>
+                    </div>
+
+                    <div class="form-group required">
+                        <label class="col-sm-3 control-label"
+                               th:text="#{label.registrationForm.passwordConfirmed}">confirmPassword</label>
+
+                        <div class="col-sm-4">
+                            <input type="password" min="6" max="32" class="form-control"
+                                   required="required" placeholder="Confirm Password"
+                                   th:field="*{passwordConfirmed}"/>
+                        </div>
+                        <p class="text-danger"
+                           th:if="${#fields.hasErrors('passwordConfirmed')}">
+                            <span th:errors="*{passwordConfirmed}">Required</span>
+                        </p>
+                    </div>
+
+
+                    <div class="form-group required">
+                        <label class="col-sm-3 control-label"
+                               th:text="#{label.registrationForm.organization.name}">Organization Name</label>
+
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control" id="name"
+                                   placeholder="Organization Name" th:field="*{organizationName}"/>
+                        </div>
+                        <p class="text-danger"
+                           th:if="${#fields.hasErrors('organizationName')}">
+                            <span th:errors="*{organizationName}">Required</span>
+                        </p>
+                    </div>
+
+                    <div class="form-group required">
+                        <label for="phone" class="col-sm-3 control-label"
+                               th:text="#{label.registrationForm.organization.phone}">Phone</label>
+
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control" id="phone"
+                                   placeholder="1-(309)-788-8978" th:field="*{phoneNumber}"/>
+                        </div>
+                        <p class="text-danger"
+                           th:if="${#fields.hasErrors('phoneNumber')}">
+                            <span th:errors="*{phoneNumber}">Required</span>
+                        </p>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label"
+                               th:text="#{label.registrationForm.organization.website}">Website</label>
+
+                        <div class="col-sm-4">
+                            <input type="url" class="form-control"
+                                   placeholder="http://example.com" th:field="*{websiteUrl}"/>
+                        </div>
+                        <p class="text-danger"
+                           th:if="${#fields.hasErrors('websiteUrl')}">
+                            <span th:errors="*{websiteUrl}">Required</span>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="panel-footer clearfix">
+
+                    <div class="pull-left">
+                        <a href="#" th:href="@{/organization/list}" class="btn btn-default"><span
+                                class="glyphicon glyphicon-arrow-left"></span> CANCEL </a>
+                    </div>
+
+                    <div class="pull-right">
+                        <button type="submit" class="btn btn-primary btn-success">
+                            SAVE <span class="glyphicon glyphicon-ok-sign"></span>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+</body>
+
+</html>

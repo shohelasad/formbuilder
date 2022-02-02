@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+      xmlns:th="http://www.thymeleaf.org" layout:decorator="layout/main">
+
+<head>
+    <title>Programs</title>
+</head>
+
+<body>
+
+<section layout:fragment="content" ng-app="sportsRegApp">
+
+    <div class="container" style="margin-top: 78px">
+        <div>
+            <p sec:authorize="hasRole('ROLE_ADMIN')" align="right">
+                <a type="button" class="btn btn-default" th:href="@{/program/create/overview}">
+                    <i class="fa fa-plus-square-o"></i> Add New Program
+                </a>
+            </p>
+        </div>
+
+        <div th:if="${message}" class="alert alert-info">
+            <p th:text="${message}"></p>
+        </div>
+
+        <div class="page-title">
+            <h1 class="h1">ALL PROGRAMS</h1>
+        </div>
+
+        <table class="table table-bordered">
+            <thead>
+            <tr class="info">
+                <th th:text="#{label.programForm.name}">Name</th>
+                <th th:text="#{label.programForm.openStatus}">Registration Status</th>
+                <th th:text="#{label.programForm.publishStatus}">Publish Status</th>
+                <th th:text="#{label.programForm.filled}">Filled</th>
+                <th th:text="#{button.view.registrants}">Registrants</th>
+                <th>Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="program, iterStat : ${page.content}" th:class="${iterStat.odd}? 'odd'">
+                <td>
+                    <a th:href="@{/organizations/__${program.organization.slug}__/programs/__${program.slug}__}"> <span
+                            th:text="${program.name}"></span></a>
+                </td>
+                <td style="text-align: center" th:text="${program.publish.programStatus}"/>
+                <td style="text-align: center" th:text="${program.publish.publishStatus}"/>
+                <td style="text-align: center" th:text="${program.registrationCount}"/>
+                <td style="text-align: center"><a href="#" class="btn" title="View Registrants"
+                       th:href="@{/program/__${program.id}__/view-registrants}">
+                    <span class="glyphicon glyphicon-user"></span></a>
+                </td>
+
+                <td>
+                    <div class="btn-group">
+                        <a type="button" class="btn btn-default btn-sm" href="#"
+                           th:href="@{'/program/edit/' + ${program.id}}">
+                            <span class="glyphicon glyphicon-edit"></span> Edit
+                        </a>
+
+                        <button type="button" class="btn btn-default btn-sm dropdown-toggle"
+                                data-toggle="dropdown">
+                            <span class="caret"></span>
+                        </button>
+
+                        <ul class="dropdown-menu" role="menu">
+
+                            <li role="presentation">
+                                <a th:href="@{'/program/clone/' + ${program.id}}">
+                                    <span class="glyphicon glyphicon-plus"></span>&nbsp;&nbsp;Clone
+                                </a>
+
+                            </li>
+
+                            <li role="presentation">
+                                <a th:href="@{#}" th:onclick="'javascript:deleteProgram(\'' + ${program.id} + '\');'">
+                                    <span class="glyphicon glyphicon-remove"></span>&nbsp;&nbsp;Delete
+                                </a>
+                                <script type="text/javascript">
+                                    function deleteProgram(formId) {
+                                        if (confirm("Are you sure you want to delete this? This action cannot be undone.")) {
+                                            $("#delete-program-" + formId).submit();
+                                        }
+                                    }
+                                </script>
+                                <form style="visibility: hidden" th:id="'delete-program-' +${program.id}" method="post"
+                                      action="#" th:action="@{/program/delete/__${program.id}__}">
+                                </form>
+                            </li>
+
+                        </ul>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+        <div layout:include="layout/common-fragment :: pagination"></div>
+
+    </div>
+</section>
+
+<div layout:fragment="custom-scripts">
+    <script type="text/javascript">
+        function deleteConfirm() {
+                $("#form-delete").submit();
+        }
+    </script>
+
+    <script type="text/javascript">
+
+		$(function() { 	
+			$.ajax({url: "/api/v1/user/public/is-authticated", success: function(result){	
+				if(result == true) {
+					var OSName="Unknown OS";
+					if (navigator.appVersion.indexOf("Win")!=-1) OSName="Windows";
+					if (navigator.appVersion.indexOf("Mac")!=-1) OSName="MacOS";
+					if (navigator.appVersion.indexOf("X11")!=-1) OSName="UNIX";
+					if (navigator.appVersion.indexOf("Linux")!=-1) OSName="Linux";
+
+					if(OSName == "MacOS") {
+						$.reject({
+			        		 reject : {
+			        		        safari: 8, // Apple Safari
+									chrome: 42, // Google Chrome
+									firefox: 36, // Mozilla Firefox
+									msie: 9, // Microsoft Internet Explorer
+									opera: true, // Opera
+									konqueror: true, // Konqueror (Linux)
+									unknown: true, // Everything else
+			        		    },
+			        		    display: ['firefox','chrome','safari'],
+			        		    browserShow: true, // Should the browser options be shown?
+			        		    // Pop-up Window Text
+			        		    header: 'Your Internet Browser (version) is out of date',
+			        		    paragraph1: '',
+			        		    paragraph2: 'Please install or upgrade to anyone of the supported browsers',
+			        		    // Message displayed below closing link
+			        		    closeMessage: 'Closing this window your experience '+
+			        		                    'on this website may be degraded',
+			        		    closeLink: 'Close This Window',
+			        		    // Use cookies to remmember if window was closed previously?
+			        		    closeCookie: true,
+			        		    // Path where images are located
+			        		    imagePath: '/webjars/jReject/1.1.0/images/'
+			            });
+			        }
+			        else {
+			        	 $.reject({
+			        		 reject : {
+			        			    safari: 8, // Apple Safari
+									chrome: 42, // Google Chrome
+									firefox: 36, // Mozilla Firefox
+									msie: 9, // Microsoft Internet Explorer
+									opera: true, // Opera
+									konqueror: true, // Konqueror (Linux)
+									unknown: true, // Everything else
+			        		    },
+			        		    display: ['firefox','chrome','msie'],
+			        		    browserShow: true, // Should the browser options be shown?
+			        		    // Pop-up Window Text
+			        		    header: 'Your Internet Browser (version) is out of date',
+			        		    paragraph1: '',
+			        		    paragraph2: 'Please install or upgrade to anyone of the supported browsers',
+			        		    // Message displayed below closing link
+			        		    closeMessage: 'Closing this window your experience '+
+			        		                    'on this website may be degraded',
+			        		    closeLink: 'Close This Window',
+			        		    // Use cookies to remmember if window was closed previously?
+			        		    closeCookie: true,
+			        		    // Path where images are located
+			        		    imagePath: '/webjars/jReject/1.1.0/images/'
+			             });
+			        }
+
+			        return false;
+				}
+			}});
+		});
+	</script>
+</div>
+
+
+</body>
+</html>

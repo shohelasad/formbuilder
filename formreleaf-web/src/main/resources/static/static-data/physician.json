@@ -1,0 +1,145 @@
+{
+  "id" : 6,
+  "blocks" : [
+    {
+      "id" : 1,
+      "title" : "Primary Care Physician",
+      "fields" : [
+        {
+          "id" : "8c1429c9-cc21-45a4-a373-e1287ba1881f",
+          "fieldType" : "textfield",
+          "name" : "physicians_primaryCarePhysician_firstName",
+          "title" : "First Name",
+          "helpText" : "Please enter first name",
+          "selected" : false,
+          "value" : null,
+          "validator" : {
+            "maxLength" : null,
+            "minLength" : null,
+            "required" : true,
+            "pattern" : null,
+            "validationType" : "text",
+            "errorMessage" : null
+          },
+          "options" : [ ]
+        },
+        {
+          "id" : "015de746-8706-41ae-bd50-7d5c53c862c8",
+          "fieldType" : "textfield",
+          "name" : "physicians_primaryCarePhysician_lastName",
+          "title" : "Last Name",
+          "helpText" : "Please enter last name",
+          "selected" : false,
+          "value" : null,
+          "validator" : {
+            "maxLength" : null,
+            "minLength" : null,
+            "required" : true,
+            "pattern" : null,
+            "validationType" : "text",
+            "errorMessage" : null
+          },
+          "options" : [ ]
+        },
+        {
+          "id" : "2674e5cf-5061-46e0-a607-5ada49f8f10a",
+          "fieldType" : "textfield",
+          "name" : "physicians_primaryCarePhysician_workPhone",
+          "title" : "Work Phone",
+          "helpText" : "Please enter work phone",
+          "selected" : false,
+          "value" : null,
+          "validator" : {
+            "maxLength" : null,
+            "minLength" : null,
+            "required" : true,
+            "pattern" : null,
+            "validationType" : "tel",
+            "errorMessage" : null
+          },
+          "options" : [ ]
+        }
+      ]
+    },
+    {
+      "id" : 2,
+      "title" : "Other",
+      "fields" : [
+        {
+          "id" : "da054bab-0e1a-44a0-9345-24b5259dd603",
+          "fieldType" : "textfield",
+          "name" : "physicians_other_firstName",
+          "title" : "First Name",
+          "helpText" : "Please enter first name",
+          "selected" : false,
+          "value" : null,
+          "validator" : {
+            "maxLength" : null,
+            "minLength" : null,
+            "required" : true,
+            "pattern" : null,
+            "validationType" : "text",
+            "errorMessage" : null
+          },
+          "options" : [ ]
+        },
+        {
+          "id" : "a23d015f-4dcc-4ca1-8b89-d56cc24a988b",
+          "fieldType" : "textfield",
+          "name" : "physicians_other_lastName",
+          "title" : "Last Name",
+          "helpText" : "Please enter last name",
+          "selected" : false,
+          "value" : null,
+          "validator" : {
+            "maxLength" : null,
+            "minLength" : null,
+            "required" : true,
+            "pattern" : null,
+            "validationType" : "text",
+            "errorMessage" : null
+          },
+          "options" : [ ]
+        },
+        {
+          "id" : "99126225-b3a1-4323-86cf-5dbbf843ce22",
+          "fieldType" : "textfield",
+          "name" : "physicians_other_workPhone",
+          "title" : "Work Phone",
+          "helpText" : "Please enter work phone",
+          "selected" : false,
+          "value" : null,
+          "validator" : {
+            "maxLength" : null,
+            "minLength" : null,
+            "required" : true,
+            "pattern" : null,
+            "validationType" : "tel",
+            "errorMessage" : null
+          },
+          "options" : [ ]
+        },
+        {
+          "id" : "cba7945d-2336-486c-bb83-b3a74ff7a601",
+          "fieldType" : "textfield",
+          "name" : "physicians_other_physicianType",
+          "title" : "Physician Type ",
+          "helpText" : "Please enter Physician Type",
+          "selected" : false,
+          "value" : null,
+          "validator" : {
+            "maxLength" : null,
+            "minLength" : null,
+            "required" : true,
+            "pattern" : null,
+            "validationType" : "text",
+            "errorMessage" : null
+          },
+          "options" : [ ]
+        }
+      ]
+    }
+  ],
+  "instruction" : null,
+  "title" : "Physicians"
+}

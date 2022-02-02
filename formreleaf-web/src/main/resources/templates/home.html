@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>FormReLeaf</title>
+    <meta charset="utf-8"/>
+    <meta http-equiv="x-ua-compatible" content="ie=edge"/>
+    <meta name="description" content="Smart registration for your school and parents"/>
+   <!-- <meta name="viewport" content="width=device-width, initial-scale=1"/>-->
+
+    <script src="/webjars/jquery/1.11.1/jquery.min.js" th:src="@{/webjars/jquery/1.11.1/jquery.min.js}"></script>
+    <script src="/webjars/bootstrap/3.3.1/js/bootstrap.min.js" th:src="@{/webjars/bootstrap/3.3.1/js/bootstrap.min.js}"></script>
+    <script src="/webjars/jReject/1.1.0/js/jquery.reject.js" th:src="@{/webjars/jReject/1.1.0/js/jquery.reject.js}"></script>
+            
+    <link rel="stylesheet" href="/css/normalize.css" th:src="@{/css/normalize.css}"/>
+    <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css" th:src="@{/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" href="/css/default.form_releaf.css" th:src="@{/css/default.form_releaf.css}"/>
+    <link rel="stylesheet" href="/css/animate.css" th:src="@{/css/animate.css}"/>
+    <link href="/font-awesome-4.4.0/css/font-awesome.min.css" th:href="@{/font-awesome-4.4.0/css/font-awesome.min.css}" rel="stylesheet" type="text/css"/>
+    <link href="/webjars/jReject/1.1.0/css/jquery.reject.css" th:href="@{/webjars/jReject/1.1.0/css/jquery.reject.css}" rel="stylesheet"/>
+
+    <script type="text/javascript">
+        $(function () {
+            $('.main-header').css('opacity', '1');
+            function flipinHeadings() {
+                //Animate Heading
+                $(".main-header--heading").addClass('animated flipInX');
+                $(".main-header--subheading").addClass('animated flipInX');
+            }
+
+            function headerSizing() {
+                var windowHeight = $(window).height();
+                var navHeight = $('#main-nav').height();
+
+                $('.main-header').height((windowHeight - navHeight - 75));
+            }
+
+            $(window).resize(function () {
+                headerSizing();
+            });
+
+            headerSizing();
+        });
+    </script>
+    
+</head>
+<body>
+
+<div class="navbar-wrapper">
+    <nav id="main-nav" class="navbar navbar-inverse navbar-static-top">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+                    aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand brand" href="/">Form<u>RE</u>Leaf</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse ">
+
+            <ul class="nav navbar-nav">
+                <li sec:authorize="hasRole('ROLE_ADMIN')"><a th:href="@{/program/list}">PROGRAMS</a></li>
+                <li sec:authorize="hasRole('ROLE_ADMIN')"><a th:href="@{/program/registrants}">REGISTRANTS</a></li>
+                <li sec:authorize="hasRole('ROLE_ADMIN')"><a th:href="@{/report/list}">REPORTS</a></li>
+                <li sec:authorize="hasRole('ROLE_USER')"><a th:href="@{/organizations/list}" class="text-uppercase">Find
+                    Organization</a></li>
+                <li sec:authorize="hasRole('ROLE_USER')"><a th:href="@{/registration/list}" class="text-uppercase">Registration History</a></li>
+				<li sec:authorize="hasRole('ROLE_APPLICATION')"><a th:href="@{/admin/organization/list}">ORGANIZATIONS</a></li>    
+                <li sec:authorize="hasRole('ROLE_APPLICATION')"><a th:href="@{/admin/user/list}">USERS</a></li>  	
+                <li sec:authorize="isAuthenticated()"><a th:href="@{/user/profile}" class="text-uppercase">Profile</a></li>
+            </ul>
+
+            <ul class="nav navbar-nav navbar-right" style="margin-right: 5px">
+                <li sec:authorize="isAuthenticated()">
+                    <a href="#" class="text-uppercase">
+                        Welcome <span th:text="${#authentication.principal.firstName}"></span>
+                        <span th:text="${#authentication.principal.lastName}"></span>
+                    </a>
+                </li>
+
+                <li sec:authorize="isAuthenticated()">
+                    <a th:href="@{/logout}" class="text-uppercase">&nbsp; Log Out</a>
+                </li>
+
+                <li sec:authorize="!isAuthenticated()" class="text-uppercase">
+                    <a th:href="@{/signup}" class="text-uppercase">Sign Up</a>
+                </li>
+                <li sec:authorize="!isAuthenticated()" class="text-uppercase">
+                    <a th:href="@{/login}" class="text-uppercase">Log In</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</div>
+
+<div class="main-header">
+    <div class="headings row">
+        <p class="main-header--heading">
+            Smarter registration for your school and parents
+        </p>
+
+        <p class="main-header--subheading">
+            Easier on parents, easier on you
+        </p>
+
+        <p class="main-header--buttons" sec:authorize="!isAuthenticated()">
+            <a th:href="@{/signup}" class="btn btn-success btn-lg">Sign Up Today</a>
+        </p>
+    </div>
+
+</div>
+
+<div class="shadow-row row">
+    <div class="col-sm-4 box-easy">
+        <i class="fa fa-magic"></i>
+        <hr/>
+        <h3>It's Easy!</h3>
+
+        <p>Reducing wasted, repetitive efforts, by offering FormReleaf, parents can register their student athlete for
+            multiple sports while entering information only once.</p>
+    </div>
+
+    <div class="col-sm-4 box-saves">
+        <i class="fa fa-usd"></i>
+        <hr/>
+        <h3>Saves Time and Money!</h3>
+
+        <p> Staff members can register multiple athletes at the same time in FormReleaf, allowing more time for
+            interaction and instruction with your student athletes.</p>
+    </div>
+    <div class="col-sm-4 columns box-customize">
+        <i class="fa fa-lock"></i>
+        <hr/>
+        <h3>Protects Personal Data</h3>
+
+        <p>Data security is one of our biggest priorities. Access, organize, and store all of your forms securely
+            online.</p>
+    </div>
+</div>
+
+<div class="tag-lines">
+    <div class="col-sm-12">
+        <h2 class="center">Save Time, Money, Paper and Best of All - It's Easy to Use </h2>
+
+        <h3 class="center">Your parents will love you for it </h3>
+    </div>
+</div>
+
+<footer class="footer">
+
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="footer-brand">
+            </div>
+        </div>
+    </div>
+</footer>
+<script type="text/javascript">
+	$(function() { 
+		$.ajax({url: "/api/v1/user/public/is-authticated", success: function(result){
+			if(result == true) {
+				var OSName="Unknown OS";
+				if (navigator.appVersion.indexOf("Win")!=-1) OSName="Windows";
+				if (navigator.appVersion.indexOf("Mac")!=-1) OSName="MacOS";
+				if (navigator.appVersion.indexOf("X11")!=-1) OSName="UNIX";
+				if (navigator.appVersion.indexOf("Linux")!=-1) OSName="Linux";
+	
+				if(OSName == "MacOS") { 
+					$.reject({  
+		        		 reject : {  
+		        		        safari: 8, // Apple Safari
+								chrome: 42, // Google Chrome
+								firefox: 36, // Mozilla Firefox
+								msie: 9, // Microsoft Internet Explorer
+								opera: true, // Opera
+								konqueror: true, // Konqueror (Linux)
+								unknown: true, // Everything else
+		        		    },  
+		        		    display: ['firefox','chrome','safari'], 
+		        		    browserShow: true, // Should the browser options be shown?  
+		        		    // Pop-up Window Text  
+		        		    header: 'Your Internet Browser (version) is out of date',  
+		        		    paragraph1: '',  
+		        		    paragraph2: 'Please install or upgrade to anyone of the supported browsers',  
+		        		    // Message displayed below closing link  
+		        		    closeMessage: 'Closing this window your experience '+  
+		        		                    'on this website may be degraded',  
+		        		    closeLink: 'Close This Window',  
+		        		    // Use cookies to remmember if window was closed previously?  
+		        		    closeCookie: true,     
+		        		    // Path where images are located    
+		        		    imagePath: '/webjars/jReject/1.1.0/images/' 
+		            });	  
+		        }
+		        else {
+		        	 $.reject({  
+		        		 reject : {  
+		        			    safari: 8, // Apple Safari
+								chrome: 42, // Google Chrome
+								firefox: 36, // Mozilla Firefox
+								msie: 9, // Microsoft Internet Explorer
+								opera: true, // Opera
+								konqueror: true, // Konqueror (Linux)
+								unknown: true, // Everything else
+		        		    },  
+		        		    display: ['firefox','chrome','msie'], 
+		        		    browserShow: true, // Should the browser options be shown?  
+		        		    // Pop-up Window Text  
+		        		    header: 'Your Internet Browser (version) is out of date',  
+		        		    paragraph1: '',  
+		        		    paragraph2: 'Please install or upgrade to anyone of the supported browsers',  
+		        		    // Message displayed below closing link  
+		        		    closeMessage: 'Closing this window your experience '+  
+		        		                    'on this website may be degraded',  
+		        		    closeLink: 'Close This Window',  
+		        		    // Use cookies to remmember if window was closed previously?  
+		        		    closeCookie: true,     
+		        		    // Path where images are located    
+		        		    imagePath: '/webjars/jReject/1.1.0/images/' 
+		             });	
+		        }
+		      
+		        return false;
+			}
+		}});	
+	});
+</script> 
+</body>
+</html>

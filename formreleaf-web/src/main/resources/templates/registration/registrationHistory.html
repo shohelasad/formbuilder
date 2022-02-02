@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout/main">
+<head lang="en">
+    <meta charset="UTF-8"/>
+    <title>Registration History</title>
+
+    <style>
+
+        .panel-default > .panel-heading-orange {
+            background: darkorange;
+            color: #FFF;
+        }
+
+    </style>
+</head>
+<body>
+<section layout:fragment="content">
+    <div class="container body-container">
+
+        <div th:unless="${#sets.isEmpty(registrationsUncompleted)}" style="border-color: darkorange">
+            <div class="page-title panel-heading-orange"><h1 class="h1">Incomplete Registration</h1></div>
+
+            <div style="background-color: #ffefce">
+
+                <table class="table table-hover table-bordered">
+                    <thead>
+                    <tr style="background-color: orange">
+                        <th>Organization</th>
+                        <th>Program</th>
+                        <th>Section</th>
+                        <th>Person</th>
+                        <th>Reg. date</th>
+                        <td align="center">#</td>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+
+                    <tr th:each="registration, iterStat : ${registrationsUncompleted}">
+
+                        <td>
+                            <a th:href="@{/organizations/__${registration.program.organization.slug}__}">
+                                <span th:text="${registration.program.organization.name}"></span>
+                            </a>
+                        </td>
+                        <td>
+                            <a th:href="@{/organizations/__${registration.program.organization.slug}__/programs/__${registration.program.slug}__}">
+                                <span th:text="${registration.program.name}"></span>
+                            </a>
+                        </td>
+                        <td>
+                            <span th:text="${registration.getSectionNames()}"></span>
+                        </td>
+                        <td>
+                            <span th:text="${registration.registrantName}"></span>
+                        </td>
+
+                        <td th:text="${#dates.format(registration.registrationDate, 'MMMM dd, yyyy')}">registrationDate
+                        </td>
+                        <td align="center">
+                            <a class="btn btn-default" href="#" th:href="@{/registration/view/__${registration.id}__}">
+                                View </a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="page-title"><h1 class="h1">Completed registrations</h1></div>
+
+        <div th:if="${message}" class="alert alert-info">
+            <p th:text="${message}"></p>
+        </div>
+
+        <div th:if="${#sets.isEmpty(registrations)}" class="alert alert-info" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                    aria-hidden="true">&times;</span></button>
+            <p> No previous registration record has been found </p>
+        </div>
+
+        <table th:unless="${#sets.isEmpty(registrations)}" class="table table-hover table-bordered">
+            <thead>
+            <tr class="info">
+                <th>Organization</th>
+                <th>Program</th>
+                <th>Section</th>
+                <th>Person</th>
+                <th>Reg. date</th>
+                <td align="center">#</td>
+            </tr>
+            </thead>
+
+            <tbody>
+
+            <tr th:each="registration, iterStat : ${registrations}"
+                th:classappend="${registration.registrationStatus == T(com.formreleaf.domain.enums.RegistrationStatus).INCOMPLETE} ? 'warning' : ''">
+
+                <td>
+                    <a th:href="@{/organizations/__${registration.program.organization.slug}__}">
+                        <span th:text="${registration.program.organization.name}"></span>
+                    </a>
+                </td>
+                <td>
+                    <a th:href="@{/organizations/__${registration.program.organization.slug}__/programs/__${registration.program.slug}__}">
+                        <span th:text="${registration.program.name}"></span>
+                    </a>
+                </td>
+                <td>
+                    <span th:text="${registration.getSectionNames()}"></span>
+                </td>
+                <td>
+                    <span th:text="${registration.registrantName}"></span>
+                </td>
+
+                <td th:text="${#dates.format(registration.registrationDate, 'MMMM dd, yyyy')}">registrationDate
+                </td>
+                <td align="center">
+                    <a class="btn btn-default" href="#" th:href="@{/registration/view/__${registration.id}__}">
+                        View </a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+        <div class="page-title"><h1 class="h1">Canceled registrations</h1></div>
+
+        <div th:if="${#sets.isEmpty(registrationsCanceled)}" class="alert alert-info" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                    aria-hidden="true">&times;</span></button>
+            <p> No previous canceled registration record has been found </p>
+        </div>
+
+        <table th:unless="${#sets.isEmpty(registrationsCanceled)}" class="table table-hover table-bordered">
+            <thead>
+            <tr class="danger">
+                <th>Organization</th>
+                <th>Program</th>
+                <th>Section</th>
+                <th>Person</th>
+                <th>Reg. date</th>
+                <th>View</th>
+            </tr>
+            </thead>
+
+            <tbody>
+
+            <tr th:each="registration, iterStat : ${registrationsCanceled}" th:class="${iterStat.odd}? 'odd'">
+                <td>
+                    <a th:href="@{/organizations/__${registration.program.organization.slug}__}">
+                        <span th:text="${registration.program.organization.name}"></span>
+                    </a>
+                </td>
+                <td>
+                    <a th:href="@{/programs/__${registration.program.slug}__}">
+                        <span th:text="${registration.program.name}"></span>
+                    </a>
+                </td>
+                <td>
+                    <span th:text="${registration.getSectionNames()}"></span>
+                </td>
+                <td>
+                    <span th:text="${registration.registrantName}"></span>
+                </td>
+
+                <td th:text="${#dates.format(registration.registrationDate, 'MMMM dd, yyyy')}">registrationDate
+                </td>
+                <td align="center">
+                    <a class="btn btn-default" href="#" th:href="@{/registration/view/__${registration.id}__}">
+                        View </a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+</section>
+</body>
+</html>

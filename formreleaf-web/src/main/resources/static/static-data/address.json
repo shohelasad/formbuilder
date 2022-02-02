@@ -1,0 +1,354 @@
+{
+  "id" : 2,
+  "blocks" : [
+    {
+      "id" : 1,
+      "title" : "Home Address",
+      "fields" : [
+        {
+          "id" : "7ed134fa-590e-4db6-b48b-34ad30fcaf76",
+          "fieldType" : "textarea",
+          "name" : "address_homeAddress_address",
+          "title" : "Address",
+          "helpText" : "Please enter address",
+          "selected" : false,
+          "value" : null,
+          "validator" : {
+            "maxLength" : null,
+            "minLength" : null,
+            "required" : true,
+            "pattern" : null,
+            "validationType" : "text",
+            "errorMessage" : null
+          },
+          "options" : [ ]
+        },
+        {
+          "id" : "7f8f3152-08b1-4106-b780-7ddf6ff52da9",
+          "fieldType" : "textarea",
+          "name" : "address_homeAddress_addressLine2",
+          "title" : "Address Line 2",
+          "helpText" : "Please enter address line 2",
+          "selected" : false,
+          "value" : null,
+          "validator" : {
+            "maxLength" : null,
+            "minLength" : null,
+            "required" : false,
+            "pattern" : null,
+            "validationType" : "text",
+            "errorMessage" : null
+          },
+          "options" : [ ]
+        },
+        {
+          "id" : "5eaf4d88-5865-4acd-861e-33e398daad35",
+          "fieldType" : "textfield",
+          "name" : "address_homeAddress_city",
+          "title" : "City",
+          "helpText" : "Please enter city",
+          "selected" : false,
+          "value" : null,
+          "validator" : {
+            "maxLength" : null,
+            "minLength" : null,
+            "required" : false,
+            "pattern" : null,
+            "validationType" : "text",
+            "errorMessage" : null
+          },
+          "options" : [ ]
+        },
+        {
+          "id" : "101cd698-4be1-4f88-9854-662d831a8f47",
+          "fieldType" : "state",
+          "name" : "address_homeAddress_state",
+          "title" : "State",
+          "helpText" : "Please enter State",
+          "selected" : false,
+          "value" : null,
+          "validator" : {
+            "maxLength" : null,
+            "minLength" : null,
+            "required" : false,
+            "pattern" : null,
+            "validationType" : "text",
+            "errorMessage" : null
+          },
+          "options" : [ ]
+        },
+        {
+          "id" : "fda4dc64-eaa1-4096-bf1c-b0c0c91d65d8",
+          "fieldType" : "textfield",
+          "name" : "address_homeAddress_zipPostalCode",
+          "title" : "Zip/Postal Code",
+          "helpText" : "Please enter Zip or Postal Code",
+          "selected" : false,
+          "value" : null,
+          "validator" : {
+            "maxLength" : null,
+            "minLength" : null,
+            "required" : false,
+            "pattern" : null,
+            "validationType" : "text",
+            "errorMessage" : null
+          },
+          "options" : [ ]
+        },
+        {
+          "id" : "234eb807-6791-4917-8701-5e51f0a6a724",
+          "fieldType" : "country",
+          "name" : "address_homeAddress_country",
+          "title" : "Country",
+          "helpText" : "Please enter Country",
+          "selected" : false,
+          "value" : null,
+          "validator" : {
+            "maxLength" : null,
+            "minLength" : null,
+            "required" : false,
+            "pattern" : null,
+            "validationType" : "text",
+            "errorMessage" : null
+          },
+          "options" : [ ]
+        }
+      ]
+    },
+    {
+      "id" : 2,
+      "title" : "Secondary Address",
+      "fields" : [
+        {
+          "id" : "b253d120-4804-4c69-81f8-cb5b16b166dd",
+          "fieldType" : "textarea",
+          "name" : "address_secondaryAddress_address",
+          "title" : "Address",
+          "helpText" : "Please enter address",
+          "selected" : false,
+          "value" : null,
+          "validator" : {
+            "maxLength" : null,
+            "minLength" : null,
+            "required" : true,
+            "pattern" : null,
+            "validationType" : "text",
+            "errorMessage" : null
+          },
+          "options" : [ ]
+        },
+        {
+          "id" : "888fe602-9fef-44d2-9f15-b1844be2d0aa",
+          "fieldType" : "textarea",
+          "name" : "address_secondaryAddress_addressLine2",
+          "title" : "Address Line 2",
+          "helpText" : "Please enter address line 2",
+          "selected" : false,
+          "value" : null,
+          "validator" : {
+            "maxLength" : null,
+            "minLength" : null,
+            "required" : false,
+            "pattern" : null,
+            "validationType" : "text",
+            "errorMessage" : null
+          },
+          "options" : [ ]
+        },
+        {
+          "id" : "5694a435-107b-46cf-a715-8d4d76bacc82",
+          "fieldType" : "textfield",
+          "name" : "address_secondaryAddress_city",
+          "title" : "City",
+          "helpText" : "Please enter city",
+          "selected" : false,
+          "value" : null,
+          "validator" : {
+            "maxLength" : null,
+            "minLength" : null,
+            "required" : false,
+            "pattern" : null,
+            "validationType" : "text",
+            "errorMessage" : null
+          },
+          "options" : [ ]
+        },
+        {
+          "id" : "2b95b78c-2c88-41e1-86ed-c18290a5da02",
+          "fieldType" : "state",
+          "name" : "address_secondaryAddress_state",
+          "title" : "State",
+          "helpText" : "Please enter State",
+          "selected" : false,
+          "value" : null,
+          "validator" : {
+            "maxLength" : null,
+            "minLength" : null,
+            "required" : false,
+            "pattern" : null,
+            "validationType" : "text",
+            "errorMessage" : null
+          },
+          "options" : [ ]
+        },
+        {
+          "id" : "17c4f11e-27ce-4c2a-a93d-efa0024e5698",
+          "fieldType" : "textfield",
+          "name" : "address_secondaryAddress_zipPostalCode",
+          "title" : "Zip/Postal Code",
+          "helpText" : "Please enter Zip or Postal Code",
+          "selected" : false,
+          "value" : null,
+          "validator" : {
+            "maxLength" : null,
+            "minLength" : null,
+            "required" : false,
+            "pattern" : null,
+            "validationType" : "text",
+            "errorMessage" : null
+          },
+          "options" : [ ]
+        },
+        {
+          "id" : "80189ba7-9403-4cbc-af45-bbd50f040026",
+          "fieldType" : "country",
+          "name" : "address_secondaryAddress_country",
+          "title" : "Country",
+          "helpText" : "Please enter Country",
+          "selected" : false,
+          "value" : null,
+          "validator" : {
+            "maxLength" : null,
+            "minLength" : null,
+            "required" : false,
+            "pattern" : null,
+            "validationType" : "text",
+            "errorMessage" : null
+          },
+          "options" : [ ]
+        }
+      ]
+    },
+    {
+      "id" : 3,
+      "title" : "Work Address",
+      "fields" : [
+        {
+          "id" : "582abc65-c439-42f4-9d3e-d140c40d171a",
+          "fieldType" : "textarea",
+          "name" : "address_workAddress_address",
+          "title" : "Address",
+          "helpText" : "Please enter address",
+          "selected" : false,
+          "value" : null,
+          "validator" : {
+            "maxLength" : null,
+            "minLength" : null,
+            "required" : true,
+            "pattern" : null,
+            "validationType" : "text",
+            "errorMessage" : null
+          },
+          "options" : [ ]
+        },
+        {
+          "id" : "22bb3b92-bf98-440f-bc04-601885b4c515",
+          "fieldType" : "textarea",
+          "name" : "address_workAddress_addressLine2",
+          "title" : "Address Line 2",
+          "helpText" : "Please enter address line 2",
+          "selected" : false,
+          "value" : null,
+          "validator" : {
+            "maxLength" : null,
+            "minLength" : null,
+            "required" : false,
+            "pattern" : null,
+            "validationType" : "text",
+            "errorMessage" : null
+          },
+          "options" : [ ]
+        },
+        {
+          "id" : "a11dd621-126b-4a12-8d11-b32787dca48c",
+          "fieldType" : "textfield",
+          "name" : "address_workAddress_city",
+          "title" : "City",
+          "helpText" : "Please enter city",
+          "selected" : false,
+          "value" : null,
+          "validator" : {
+            "maxLength" : null,
+            "minLength" : null,
+            "required" : false,
+            "pattern" : null,
+            "validationType" : "text",
+            "errorMessage" : null
+          },
+          "options" : [ ]
+        },
+        {
+          "id" : "82bc8972-6d1b-4102-965b-f05fe6b63ad2",
+          "fieldType" : "state",
+          "name" : "address_workAddress_state",
+          "title" : "State",
+          "helpText" : "Please enter State",
+          "selected" : false,
+          "value" : null,
+          "validator" : {
+            "maxLength" : null,
+            "minLength" : null,
+            "required" : false,
+            "pattern" : null,
+            "validationType" : "text",
+            "errorMessage" : null
+          },
+          "options" : [ ]
+        },
+        {
+          "id" : "d666b591-fd11-46d6-8cd5-7051efd1e539",
+          "fieldType" : "textfield",
+          "name" : "address_workAddress_zipPostalCode",
+          "title" : "Zip/Postal Code",
+          "helpText" : "Please enter Zip or Postal Code",
+          "selected" : false,
+          "value" : null,
+          "validator" : {
+            "maxLength" : null,
+            "minLength" : null,
+            "required" : false,
+            "pattern" : null,
+            "validationType" : "text",
+            "errorMessage" : null
+          },
+          "options" : [ ]
+        },
+        {
+          "id" : "cc490e0a-eb20-4a7a-b374-3b679fc3ec2e",
+          "fieldType" : "country",
+          "name" : "address_workAddress_country",
+          "title" : "Country",
+          "helpText" : "Please enter Country",
+          "selected" : false,
+          "value" : null,
+          "validator" : {
+            "maxLength" : null,
+            "minLength" : null,
+            "required" : false,
+            "pattern" : null,
+            "validationType" : "text",
+            "errorMessage" : null
+          },
+          "options" : [ ]
+        }
+      ]
+    },
+    {
+      "id" : 4,
+      "title" : "Others",
+      "fields" : [ ]
+    }
+  ],
+  "instruction" : null,
+  "title" : "Address"
+}

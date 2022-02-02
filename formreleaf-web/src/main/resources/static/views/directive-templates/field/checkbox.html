@@ -1,0 +1,15 @@
+<div class="form-group" ng-class="{'required': field.validator.required}">
+    <div class="col-xs-offset-2 col-xs-10">
+        <div class="checkbox" for="{{field.id}}" ng-cloak>
+            <label>
+                <input ng-model="field.value" id="{{field.id}}"
+                       type="checkbox"
+                       ng-true-value="1"
+                       ng-false-value="0"
+                       ng-required="field.validator.required"/>
+                {{field.title}}
+            </label>
+            <span class="required-error" ng-show="field.validator.required && field.value == 0">(* required)</span>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,87 @@
+{
+  "id" : 8,
+  "blocks" : [
+    {
+      "id" : 1,
+      "title" : "Medication",
+      "fields" : [
+        {
+          "id" : "77b69e3c-246a-4c05-b091-ebc4f213afd7",
+          "fieldType" : "textfield",
+          "name" : "medications_medication_name",
+          "title" : "Name",
+          "helpText" : "Please enter medication name",
+          "selected" : false,
+          "value" : null,
+          "validator" : {
+            "maxLength" : null,
+            "minLength" : null,
+            "required" : true,
+            "pattern" : null,
+            "validationType" : "text",
+            "errorMessage" : null
+          },
+          "options" : [ ]
+        },
+        {
+          "id" : "ce2b10e5-7f17-44ff-8182-896097be4eaf",
+          "fieldType" : "textfield",
+          "name" : "medications_medication_diagnosis",
+          "title" : "Diagnosis",
+          "helpText" : "Please enter diagnosis",
+          "selected" : false,
+          "value" : null,
+          "validator" : {
+            "maxLength" : null,
+            "minLength" : null,
+            "required" : true,
+            "pattern" : null,
+            "validationType" : "text",
+            "errorMessage" : null
+          },
+          "options" : [ ]
+        },
+        {
+          "id" : "0d3a0473-bd10-4004-b43c-48d9331533d1",
+          "fieldType" : "textfield",
+          "name" : "medications_medication_physician",
+          "title" : "Physician",
+          "helpText" : "Please enter physician name",
+          "selected" : false,
+          "value" : null,
+          "validator" : {
+            "maxLength" : null,
+            "minLength" : null,
+            "required" : true,
+            "pattern" : null,
+            "validationType" : "text",
+            "errorMessage" : null
+          },
+          "options" : [ ]
+        },
+        {
+          "id" : "ed85bafc-260b-40f4-ba28-89a2fe0d753a",
+          "fieldType" : "textarea",
+          "name" : "medications_medication_dosageAndTimeInstructions",
+          "title" : "Dosage and time instructions",
+          "helpText" : "Please enter dosage and time instructions ",
+          "selected" : false,
+          "value" : null,
+          "validator" : {
+            "maxLength" : null,
+            "minLength" : null,
+            "required" : true,
+            "pattern" : null,
+            "validationType" : "text",
+            "errorMessage" : null
+          },
+          "options" : [ ]
+        }
+      ],
+      "allowMultiple" : true,
+      "multiFields" : [ ]
+    }
+  ],
+  "instruction" : null,
+  "title" : "Medications"
+}

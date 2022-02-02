@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout/main">
+
+<head>
+    <title>Report Share</title>
+</head>
+<body>
+
+<section layout:fragment="content" ng-app="sportsRegApp">
+
+    <div class="container body-container">
+        <!--<div class="panel panel-primary">-->
+            <div class="page-title">
+                <h1 class="h1"> Share Report ( <span th:text="${reportShareSchedule.report.name}"> </span>)
+                </h1>
+            </div>
+            <form method='POST' th:object="${reportShareSchedule}" th:action="@{/report/share}">
+                <div class="panel-body" ng-controller="ReportShareDateController">
+                    <fieldset>
+                        <div class="form-horizontal">
+
+                            <input hidden="hidden" th:field="*{report.id}"/>
+                            <input hidden="hidden" th:field="*{id}"/>
+
+                            <div class="form-group">
+                                <div class="col-md-6">
+                                    <textarea class="form-control" rows="1" th:field="*{emails}"
+                                              placeholder="List of Recipient's Email Addresses Separated by Comma"></textarea>
+
+                                    <p class="text-danger"
+                                       th:if="${#fields.hasErrors('emails')}">
+                                        <span th:errors="*{emails}">Required</span>
+                                    </p>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <select class="form-control" th:field="*{reportFormat}">
+                                        <option value="" th:text="${'-- Select A Type of Report --'}"></option>
+                                        <option th:each="format : ${T(com.formreleaf.domain.enums.ReportFormat).values()}"
+                                                th:value="${format}"
+                                                th:text="${format.label}"
+                                                th:selected="${format == reportShareSchedule.reportFormat}">
+                                        </option>
+                                    </select>
+
+                                    <p class="text-danger"
+                                       th:if="${#fields.hasErrors('reportFormat')}">
+                                        <span th:errors="*{reportFormat}">Required</span>
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-6">
+                                    <select class="form-control" th:field="*{reportSharingFrequency}">
+                                        <option value="" th:text="${'-- Frequency --'}"></option>
+                                        <option th:each="frequency : ${T(com.formreleaf.domain.enums.ReportSharingFrequency).values()}"
+                                                th:value="${frequency}"
+                                                th:text="${frequency.label}"
+                                                th:selected="${frequency == reportShareSchedule.reportSharingFrequency}">
+                                        </option>
+                                    </select>
+                                </div>
+
+                                <p class="text-danger"
+                                   th:if="${#fields.hasErrors('reportSharingFrequency')}">
+                                    <span th:errors="*{reportSharingFrequency}">Required</span>
+                                </p>
+                            </div>
+
+                            <div class="form-group"
+                                 th:attr="ng-init='setStartDate(\''+${reportShareSchedule.startDate}+'\');'">
+                                <div class="col-md-3">
+                                    <p class="input-group date">
+                                        <input type="text" class="form-control"
+                                               datepicker-popup="{{format}}"
+                                               th:field="*{startDate}"
+                                               is-open="opened"
+                                               ng-model="startDate"
+                                               datepicker-options="dateOptions"
+                                               ng-required="true" close-text="Close"
+                                               placeholder="Start Date"/>
+                                        <span class="input-group-btn">
+                                            <button type="button" class="btn btn-default" ng-click="open($event)">
+                                                <i class="glyphicon glyphicon-calendar"></i>
+                                            </button>
+                                        </span>
+                                    </p>
+
+                                    <p class="text-danger"
+                                       th:if="${#fields.hasErrors('startDate')}">
+                                        <span th:errors="*{startDate}">Required</span>
+                                    </p>
+                                </div>
+                                <div class="col-md-3"
+                                     th:attr="ng-init='setEndDate(\''+${reportShareSchedule.endDate}+'\');'">
+                                    <p class="input-group date">
+                                        <input type="text" class="form-control"
+                                               datepicker-popup="{{format}}"
+                                               th:field="*{endDate}"
+                                               is-open="opened1"
+                                               ng-model="endDate"
+                                               datepicker-options="dateOptions"
+                                               ng-required="true" close-text="Close"
+                                               placeholder="Start Date"/>
+                                        <span class="input-group-btn">
+                                            <button type="button" class="btn btn-default" ng-click="open1($event)">
+                                                <i class="glyphicon glyphicon-calendar"></i>
+                                            </button>
+                                        </span>
+                                    </p>
+
+                                    <p class="text-danger"
+                                       th:if="${#fields.hasErrors('endDate')}">
+                                        <span th:errors="*{endDate}">Required</span>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+
+                <div class="panel-footer clearfix">
+                    <div class="pull-right">
+                        <button type="submit" class="btn btn-success right">
+                            Save And View <span class="glyphicon glyphicon-circle-arrow-right"></span>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    <!--</div>-->
+</section>
+
+<div layout:fragment="custom-scripts">
+    <script type="application/javascript">
+        app.controller("ReportShareDateController", function ($scope, $log) {
+            /*<![CDATA[*/
+            $scope.setStartDate = function (date) {
+                if (date !== 'null' && typeof date != 'undefined' && date != null) {
+                    $scope.startDate = date;
+                }
+            };
+
+            $scope.setEndDate = function (date) {
+                if (date !== 'null' && typeof date != 'undefined' && date != null) {
+                    $scope.endDate = date;
+                }
+            };
+
+            $scope.today = function () {
+                $scope.dt = new Date();
+            };
+            $scope.today();
+
+            $scope.clear = function () {
+                $scope.dt = null;
+            };
+
+            $scope.toggleMin = function () {
+                $scope.minDate = $scope.minDate ? null : new Date();
+            };
+            $scope.toggleMin();
+
+            $scope.open = function ($event) {
+                $event.preventDefault();
+                $event.stopPropagation();
+
+                $scope.opened = true;
+            };
+
+            $scope.open1 = function ($event) {
+                $event.preventDefault();
+                $event.stopPropagation();
+
+                $scope.opened1 = true;
+            };
+
+            $scope.dateOptions = {
+                formatYear: 'yy',
+                startingDay: 1
+            };
+
+            $scope.formats = ['MM/dd/yyyy'];
+            $scope.format = $scope.formats[0];
+        });
+        /*]]>*/
+    </script>
+</div>
+
+</body>
+</html>

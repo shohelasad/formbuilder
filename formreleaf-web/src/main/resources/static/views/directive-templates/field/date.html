@@ -1,0 +1,24 @@
+<div class="form-group" ng-class="{'required': field.validator.required}">
+    <label ng-hide="hideLabel" class="control-label col-xs-2">{{field.title}}</label>
+
+    <div class="col-sm-4" id="date-container">
+        <p class="input-group date">
+            <input type="text" class="form-control"
+                   name="{{field.name}}"
+                   id="{{field.id}}"
+                   ng-model="field.value"
+                   ng-value="field.value"
+                   is-open="opened"
+                   datepicker-popup="{{format}}"
+                   date-format="MM/dd/yyyy"
+                   date-type="string"
+                   close-text="Close"
+                   ng-required="field.validator.required"/>
+
+            <span class="input-group-btn">
+                <button type="button" class="btn btn-default" ng-click="open($event)"><i
+                        class="glyphicon glyphicon-calendar"></i></button>
+            </span>
+        </p>
+    </div>
+</div>

@@ -1,0 +1,21 @@
+<ng-form name="participantForm" id="participantForm" class="form-horizontal" role="form" novalidate="novalidate">
+		     <div>
+		     <pre>{{section | json}}</pre>
+		     
+		     <p>asdfasdfas</p>
+        <div ng-repeat="block in section.blocks">
+            <div class="panel panel-default"
+                 ng-show="(block.fields | filter:{selected:true}).length > 0">
+                <div class="panel-heading">{{block.title}}</div>
+                <div class="panel-body" style="margin-left: 10px">
+
+                    <div ng-repeat="field in fields = (block.fields)">
+                        <field-directive field="field"></field-directive>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+
+</ng-form>
+

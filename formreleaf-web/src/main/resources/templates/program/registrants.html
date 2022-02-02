@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org" layout:decorator="layout/main">
+
+<head>
+    <title>Registration List</title>
+</head>
+
+<body>
+
+<section layout:fragment="content">
+
+    <div class="container" style="margin-top: 76px" ng-app="sportsRegApp"
+         ng-controller="RegistrationStatusChangeController" ng-cloak="">
+
+        <div>
+            <p align="right">
+                <a class="btn btn-info" ng-click="changeStatus()"><i class="fa fa-list-alt"></i> Change
+                    Status</a>
+            </p>
+        </div>
+        <input id="programId" hidden="hidden" th:value="${program.id}"/>
+
+        <div class="page-title">
+            <h1 class="h1"><span th:text="${program.name}"></span> for <span
+                    th:text="${program.organization.name}"></span> Registration</h1>
+        </div>
+
+        <table ng-show="registrations.length > 0" class="table table-bordered table-hover">
+            <thead>
+            <tr class="info">
+                <th><input type="checkbox" ng-model="checkedAll" ng-checked="checkedAll" ng-change="onCheckChange()"/>
+                </th>
+                <th>Person</th>
+                <th>Reg. date</th>
+                <th>Section</th>
+                <th>Registration Status</th>
+                <th>Approval</th>
+                <th>View</th>
+            </tr>
+            </thead>
+
+            <tbody>
+
+            <tr ng-repeat="registration in registrations">
+
+                <td>
+                    <input type="checkbox" ng-model="registration.selected" ng-checked="registration.selected"/>
+                </td>
+
+                <td>
+                    {{registration.registrantName}}
+                </td>
+                <td>
+                    {{registration.registrationDate}}
+                </td>
+
+                <td>
+                    {{registration.sectionNames}}
+                </td>
+
+                <td style="text-align: center">
+                    {{registration.registrationStatus}}
+                </td>
+                <td style="text-align: center">
+                    {{registration.registrationApproval}}
+                </td>
+
+                <td align="center">
+                    <a class="btn btn-default" ng-href="/registration/view/{{registration.id}}"> View </a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+    </div>
+</section>
+
+<div layout:fragment="custom-scripts">
+    <script src="/js/controllers/registration-status-change-controller.js"
+            th:src="@{/js/controllers/registration-status-change-controller.js}"></script>
+    <script src="/js/service/registration.service.js?version=1.2" th:src="@{/js/service/registration.service.js?version=1.2}"></script>
+    <script src="/js/service/program.service.js?version=1.0" th:src="@{/js/service/program.service.js?version=1.0}"></script>
+    <script src="/js/underscore.js" th:src="@{/js/underscore.js}"></script>
+</div>
+
+</body>
+</html>

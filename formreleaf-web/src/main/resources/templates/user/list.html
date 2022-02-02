@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      layout:decorator="layout/main">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Search :: Registrants</title>
+</head>
+<body>
+
+<section layout:fragment="content">
+    <div class="container marketing" style="margin-top: 100px">
+    
+        <div id="custom-search-input">
+            <form method="get" th:action="@{/user/search}">
+                <div class="input-group col-md-12">
+                    <input type="text" class="form-control input-lg" name="q" id="q"
+                           placeholder="Type organization name or keyword to find a program."/>
+                    <span class="input-group-btn">
+                        <button class="btn btn-info btn-lg" type="submit">
+                            <i class="glyphicon glyphicon-search"></i>
+                        </button>
+                    </span>
+                </div>
+            </form>
+        </div>
+
+        <hr/>
+        
+<!--         <div>
+            <p sec:authorize="hasRole('ROLE_APPLICATION')" align="right">
+                <a href="#" class="btn btn-info" th:href="@{/organization/registration}">
+                    <span class="glyphicon glyphicon-plus"></span> Create New Organization 
+                </a>
+            </p>
+        </div> -->
+
+        <div th:if="${message}" class="alert alert-info">
+            <p th:text="${message}"></p>
+        </div>
+        
+        <div>
+            <div class="panel panel-primary">
+                <!-- Default panel contents -->
+                <div class="panel-heading"><span class="text-uppercase">Search Results</span></div>
+                <div class="panel-body">
+                
+                    <table border="1" class="table table-striped table-bordered table-condensed table-hover">
+						<thead>
+							<tr class="info">
+								<th th:text="#{label.registrationForm.email}">Email</th>
+								<th th:text="#{label.registrationForm.firstName}">First name</th>
+								<th th:text="#{label.registrationForm.lastName}">last name</th>
+								<th>Locked</th>
+                                <td align="center">#</td>
+                                <td align="center">#</td>
+
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="user, iterStat : ${page.content}" th:class="${iterStat.odd}? 'odd'">
+								<!--  td th:disabled="true" th:text="${organization.id}" /-->
+								<td th:text="${user.email}" />
+								<td th:text="${user.firstName}" />
+								<td th:text="${user.lastName}" />
+								<td th:text="${user.isAccountNonLocked() } ? 'No' : 'Yes'"></td>
+								<td><a class="btn" href="#" th:href="@{/user/__${user.id}__/profile}"><span class="glyphicon glyphicon-edit"></span></a></td> 
+								
+								<td align="center">
+	                        	
+	                        	<div th:switch="${user.isAccountNonLocked()}">
+	                        		<span th:case="${true}">
+	                        		<a th:href="@{#}" class="btn" th:onclick="'javascript:lockUser(\'' + ${user.id} + '\');'">
+	                                		Lock
+	                                	</a>
+	                        		</span>
+	                        		<span th:case="${false}">
+	                        		<a th:href="@{#}" class="btn" th:onclick="'javascript:unlockUser(\'' + ${user.id} + '\');'">
+	                                		Unlock
+	                                	</a>
+	                        		</span>
+	                        	</div>
+
+		                            <script type="text/javascript">
+		                                function lockUser(userId){ 
+		                                    if(confirm("Are you sure you want to lock this?")) {
+		                                        $("#lock-user-"+userId).submit();
+		                                    }
+		                                }
+		                                function unlockUser(userId){ 
+		                                    if(confirm("Are you sure you want to unlock this?")) {
+		                                        $("#unlock-user-"+userId).submit();
+		                                    }
+		                                }
+		                                
+		                            </script>
+		                            <form style="visibility: hidden" th:id="'lock-user-' +${user.id}" method="post" action="#" th:action="@{/user/lock/__${user.id}__}">
+		                            </form>
+		                             <form style="visibility: hidden" th:id="'unlock-user-' +${user.id}" method="post" action="#" th:action="@{/user/unlock/__${user.id}__}">
+		                            </form>
+	                        	</td>
+	
+	                        	
+							</tr>
+						</tbody>
+					</table> 
+
+
+                </div>
+
+            </div>
+            <div layout:include="layout/common-fragment :: pagination"></div>
+
+        </div>
+    </div>
+</section>
+</body>
+</html>
+

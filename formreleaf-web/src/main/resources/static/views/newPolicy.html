@@ -1,0 +1,43 @@
+<div class="modal-header bg-primary">
+    <h3 class="modal-title"><span class="text-uppercase">Create new Policy</span></h3>
+</div>
+
+<div class="modal-body">
+
+    <form name="policyForm" id="policyForm" class="form-horizontal" role="form" data-toggle="validator">
+        <div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Title</label>
+
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" ng-model="policy.title"
+                           ng-value="policy.title" required="required"
+                           placeholder="Title"/>
+                </div>
+                <p class="text-danger">{{fieldErrors.title}}</p>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Details</label>
+
+                <div class="col-sm-10">
+                    <text-angular
+                            ng-model="policy.details"></text-angular>
+                    <p class="text-danger">{{fieldErrors.details}}</p>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div class="modal-footer">
+    <button class="btn btn-warning pull-left" ng-click="cancel()">
+        <span class="glyphicon glyphicon-remove"></span><span class="text-uppercase">Cancel</span>
+    </button>
+
+    <button type="button" class="btn btn-success" ng-disabled="policyForm.$dirty && policyForm.$invalid"
+            ng-click="ok()">
+        <span class="glyphicon glyphicon-floppy-saved"> </span>&nbsp;<span
+            class="text-uppercase">Save</span>
+    </button>
+</div>

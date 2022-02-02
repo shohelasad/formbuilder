@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org" layout:decorator="layout/main">
+
+<head>
+    <title>Organization</title>
+    <link href="/css/editor.css" th:href="@{/css/editor.css}" rel="stylesheet"/>
+</head>
+
+<body>
+
+<div layout:fragment="content">
+
+    <div class="container body-container">
+
+        <div class="page-title">
+            <h1 class="h1">Change Organization Information</h1>
+        </div>
+
+        <div class="row">
+            <div class="col-md-3">
+                <div layout:include="layout/common-fragment :: sidebar"></div>
+            </div>
+
+            <div class="col-md-9">
+                <div class="panel panel-primary">
+                    <div class="panel-heading"><span class="text-uppercase">Organization Information</span></div>
+
+                    <form id="organizationForm" class="form-horizontal" role="form"
+                          th:action="@{/organization/edit}"
+                          th:object="${organizationForm}" method="post">
+
+                        <div class="panel-body">
+
+                            <fieldset>
+
+                                <div th:if="${message}" class="alert alert-info">
+                                    <p th:text="${message}"></p>
+                                </div>
+
+                                <div>
+                                    <input type="hidden" th:field="*{id}"/>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="name" class="col-sm-2 control-label"
+                                           th:text="#{label.organizationForm.name}">Name</label>
+
+                                    <div class="col-sm-4">
+                                        <input type="text" class="form-control" id="name"
+                                               placeholder="name" th:field="*{name}"/>
+                                    </div>
+                                    <p class="text-danger"
+                                       th:if="${#fields.hasErrors('name')}">
+                                        <span th:errors="*{name}">Required</span>
+                                    </p>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">Slogan</label>
+
+                                    <div class="col-sm-4">
+                                        <input type="text" class="form-control"
+                                               placeholder="slogan" th:field="*{slogan}"/>
+                                    </div>
+                                    <p class="text-danger"
+                                       th:if="${#fields.hasErrors('slogan')}">
+                                        <span th:errors="*{slogan}">Required</span>
+                                    </p>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-md-2 control-label"
+                                           th:text="#{label.organizationForm.description}">Description</label>
+
+                                    <div class="col-md-8">
+                                        <textarea class="form-control" placeholder="description"
+                                                  th:field="*{description}">
+                                        </textarea>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="street" class="col-sm-2 control-label">Address Line 1</label>
+
+                                    <div class="col-sm-4">
+                                        <textarea type="text" class="form-control" id="street"
+                                                  placeholder="addressLine1" th:field="*{addressLine1}"></textarea>
+                                    </div>
+
+                                    <p class="text-danger"
+                                       th:if="${#fields.hasErrors('addressLine1')}">
+                                        <span th:errors="*{addressLine1}">Required</span>
+                                    </p>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="street" class="col-sm-2 control-label">Address Line 2</label>
+
+                                    <div class="col-sm-4">
+                                        <textarea type="text" class="form-control" id="street"
+                                                  placeholder="addressLine2" th:field="*{addressLine2}"></textarea>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="street" class="col-sm-2 control-label"
+                                           th:text="#{label.organizationForm.street}">Street</label>
+
+                                    <div class="col-sm-4">
+                                        <input type="text" class="form-control" id="street"
+                                               placeholder="street" th:field="*{street}"/>
+                                    </div>
+
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="city" class="col-sm-2 control-label"
+                                           th:text="#{label.organizationForm.city}">City</label>
+
+                                    <div class="col-sm-4">
+                                        <input type="text" class="form-control" id="city"
+                                               placeholder="city" th:field="*{city}"/>
+                                    </div>
+
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="state" class="col-sm-2 control-label"
+                                           th:text="#{label.organizationForm.state}">State</label>
+
+                                    <div class="col-sm-4">
+                                        <input type="text" class="form-control" id="state"
+                                               placeholder="state" th:field="*{state}"/>
+                                    </div>
+
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="zip" class="col-sm-2 control-label"
+                                           th:text="#{label.organizationForm.zip}">Zip</label>
+
+                                    <div class="col-sm-4">
+                                        <input type="text" class="form-control" id="zip"
+                                               placeholder="zip" th:field="*{zip}"/>
+                                    </div>
+
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="phone" class="col-sm-2 control-label"
+                                           th:text="#{label.organizationForm.phone}">Phone</label>
+
+                                    <div class="col-sm-4">
+                                        <input type="text" class="form-control" id="phone"
+                                               placeholder="phone" th:field="*{phone}"/>
+                                    </div>
+                                    <p class="text-danger"
+                                       th:if="${#fields.hasErrors('phone')}">
+                                        <span th:errors="*{phone}">Required</span>
+                                    </p>
+                                    
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="fax" class="col-sm-2 control-label"
+                                           th:text="#{label.organizationForm.fax}">Fax</label>
+
+                                    <div class="col-sm-4">
+                                        <input type="text" class="form-control" id="fax"
+                                               placeholder="fax" th:field="*{fax}"/>
+                                    </div>
+
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="website" class="col-sm-2 control-label"
+                                           th:text="#{label.organizationForm.website}">Website</label>
+
+                                    <div class="col-sm-4">
+                                        <input type="text" class="form-control" id="website"
+                                               placeholder="website" th:field="*{website}"/>
+                                    </div>
+                                    <p class="text-danger"
+                                		th:if="${#fields.hasErrors('website')}">
+                                 		<span th:errors="*{website}">Required</span>
+                             		</p>
+                                </div>
+
+                            </fieldset>
+
+                        </div>
+
+                        <div class="panel-footer clearfix">
+
+                            <div class="pull-right">
+                                <button type="submit" class="btn btn-primary btn-success">
+                                    Save Changes <span class="glyphicon glyphicon-ok-sign"></span>
+                                </button>
+                            </div>
+
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<section layout:fragment="custom-scripts">
+
+    <script th:inline="javascript" type="text/javascript">
+        /*<![CDATA[*/
+        $(document).ready(function () {
+            $("#description").Editor();
+
+            var message = [[${organizationForm.description}]];
+            $("#description").Editor("setText", message);
+
+            $("#organizationForm").submit(function (eventObj) {
+
+                var text = $("#description").Editor("getText");
+                $("#description").val(text);
+
+                return true;
+            });
+        });
+        /*]]>*/
+    </script>
+
+</section>
+</body>
+</html>

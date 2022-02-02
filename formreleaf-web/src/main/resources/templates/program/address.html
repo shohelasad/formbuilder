@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org" layout:decorator="layout/main">
+
+<head>
+    <title>Location and Contact :: Program </title>
+    <link href="/css/program-breadcrumbs.css?version=1.0" th:href="@{/css/program-breadcrumbs.css?version=1.0}" rel="stylesheet"/>
+</head>
+
+<body ng-app="sportsRegApp">
+
+<section layout:fragment="content" ng-controller="LocationAndContactController">
+    <div class="container marketing" style="margin-top: 100px">
+
+        <input type="hidden" name="programId" th:value="${program.id}"/>
+
+        <div layout:include="layout/common-fragment :: program-breadcrumbs"></div>
+
+        <div class="panel panel-default" style="margin-top: 20px">
+            <div class="panel-heading">Location Information</div>
+
+            <div class="panel-body">
+                <div class="alert alert-success" ng-show="alert_location_show">
+                    <button type="button" class="close" data-ng-click="switchBool('alert_location_show')">×</button>
+                    <strong>Done!</strong> {{successDeletedMessage}}
+                </div>
+
+                <button type="button" class="btn btn-primary" ng-click="addNewLocationModal(lastAddedLocationId)">
+                    <span class="glyphicon glyphicon-plus-sign"></span>  Add New Location
+                </button>
+
+                <div class="panel panel-default" style="margin-top: 20px">
+                    <div class="panel-heading">Location List</div>
+                    <fieldset>
+
+                        <table border="1" class="table table-hover table-bordered">
+                            <thead>
+                            <tr class="info">
+                                <th>Name</th>
+                                <th>Address</th>
+                                <th>City</th>
+                                <th>State</th>
+                                <th>Country</th>
+                                <th th:text="#{button.edit}">Edit</th>
+                                <th th:text="#{button.delete}">Delete</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="location in locations">
+                                <td>{{location.name}}</td>
+                                <td>{{location.addressLine1}}</td>
+                                <td>{{location.city}}</td>
+                                <td>{{location.state}}</td>
+                                <td>{{location.country}}</td>
+                                <td></td>
+                                <td>
+                                    <a class="btn" ng-click="deleteLocation(location.id);">
+                                        <span class="glyphicon glyphicon-trash"></span>
+                                    </a>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+
+                    </fieldset>
+                </div>
+            </div>
+
+            <div class="panel-heading">Contact Information</div>
+
+            <div class="panel-body">
+
+                <div class="alert alert-success" ng-show="alert_contact_show">
+                    <button type="button" class="close" data-ng-click="switchBool('alert_contact_show')">×</button>
+                    <strong>Done!</strong> {{successDeletedMessage}}
+                </div>
+
+                <button type="button" class="btn btn-primary" ng-click="addNewContactModal(lastAddedContactId)">
+                    <span class="glyphicon glyphicon-plus-sign"></span>  Add New Contact
+                </button>
+
+                <div class="panel panel-default" style="margin-top: 20px">
+                    <div class="panel-heading">Contact List</div>
+                    <fieldset>
+
+                        <table border="1" class="table table-hover table-bordered">
+                            <thead>
+                            <tr class="info">
+                                <th> First Name</th>
+                                <th> Last Name</th>
+                                <th> Title</th>
+                                <th> Email</th>
+                                <th> Work Phone</th>
+                                <th> Cell Phone</th>
+                                <th> Edit</th>
+                                <th> Delete</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="contact in contacts">
+                                <td>{{contact.firstName}}</td>
+                                <td>{{contact.lastName}}</td>
+                                <td>{{contact.title}}</td>
+                                <td>{{contact.email}}</td>
+                                <td>{{contact.workPhone}}</td>
+                                <td>{{contact.cellPhone}}</td>
+                                <td></td>
+                                <td>
+                                    <a class="btn" ng-click="deleteContact(contact.id);">
+                                        <span class="glyphicon glyphicon-trash"></span>
+                                    </a>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+
+                    </fieldset>
+                </div>
+
+            </div>
+
+            <div class="panel-footer clearfix">
+                <div class="pull-right">
+
+                    <a href="#" th:href="@{/program/list}" class="btn btn-warning">
+                        <span class="glyphicon glyphicon-circle-arrow-left"></span> Back</a>
+
+                    <button type="submit" ng-click="moveToSectionPage()" class="btn btn-success"> Continue <span
+                            class="glyphicon glyphicon-circle-arrow-right"></span></button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+
+<section layout:fragment="custom-scripts">
+
+
+</section>
+
+</body>
+</html>

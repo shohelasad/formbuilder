@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org" layout:decorator="layout/main">
+
+<head>
+    <title>Overview :: Program</title>
+
+    <link href="/css/program-breadcrumbs.css?version=1.0" th:href="@{/css/program-breadcrumbs.css?version=1.0}" rel="stylesheet"/>
+    <link href="/css/editor.css" th:href="@{/css/editor.css}" rel="stylesheet"/>
+</head>
+
+<body th:with="page='overview'">
+<section layout:fragment="content">
+
+    <div class="container body-container">
+
+        <div layout:include="layout/common-fragment :: program-breadcrumbs"></div>
+
+        <div class="panel panel-primary">
+        			
+            <div class="panel-heading"><span class="text-uppercase">Program Overview</span></div>
+
+            <form id="overview-form" class="form-horizontal" role="form" th:action="@{/program/create/overview}"
+                  th:object="${program}" method="post">
+
+                <div class="panel-body">
+
+                    <div th:if="${message}" class="alert alert-info">
+                        <p th:text="${message}"></p>
+                    </div>
+
+                    <fieldset>
+                        <div class="form-group">
+
+                            <input type="hidden" th:field="*{id}"/>
+
+                            <label for="name" class="col-sm-2 control-label"
+                                   th:text="#{label.programForm.name}">Name</label>
+
+                            <div class="col-sm-4">
+                                <input type="text" class="form-control" id="name"
+                                       placeholder="Type a title for your program"
+                                       required="required"
+                                       th:field="*{name}"/>
+                            </div>
+                            <p class="text-danger"
+                               th:if="${#fields.hasErrors('name')}"><span th:errors="*{name}">Required</span>
+                            </p>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label"
+                                   th:text="#{label.programForm.tag}">Tags</label>
+
+                            <div class="col-sm-4">
+                                <input type="text" class="form-control" id="tag"
+                                       placeholder="Type your tags separately by comma" th:field="*{tag}"/>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label"
+                                   th:text="#{label.programForm.description}">Description</label>
+
+                            <div class="col-sm-10">
+								<textarea class="form-control"
+                                          placeholder="Type a quick description about the program"
+                                          th:field="*{description}">
+							    </textarea>
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+
+                <div class="panel-footer clearfix">
+
+                    <div class="pull-left">
+                        <a href="#" th:href="@{/program/list}" class="btn btn-warning">
+                            <span class="glyphicon glyphicon-circle-arrow-left"></span> Back</a>
+                    </div>
+
+                    <div class="pull-right">
+                        <button type="submit" class="btn btn-success">Save And Continue <span
+                                class="glyphicon glyphicon-circle-arrow-right"></span></button>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+
+    </div>
+</section>
+
+<section layout:fragment="custom-scripts">
+
+    <script th:inline="javascript">
+
+        $(document).ready(function () {
+
+            $("#description").Editor();
+
+            $("#overview-form").submit(function (eventObj) {
+                var text = $("#description").Editor("getText");
+                $("#description").val(text);
+
+                return true;
+            });
+
+            /*<![CDATA[*/
+            var message = [[${program.description}]];
+            $("#description").Editor("setText", message);
+            /*]]>*/
+        });
+
+    </script>
+</section>
+
+</body>
+</html>

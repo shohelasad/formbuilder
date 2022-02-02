@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org" layout:decorator="layout/main">
+
+<head>
+    <title>Emergency Contact</title>
+    <link href="/css/program-breadcrumbs.css?version=1.0" th:href="@{/css/program-breadcrumbs.css?version=1.0}" rel="stylesheet"/>
+    <script src="webjars/angular/1.3.15/angular.min.js" th:src="@{/webjars/angular/1.3.15/angular.min.js}"></script>
+</head>
+
+<body>
+
+<section layout:fragment="content" ng-app="profileApp" ng-controller="ContactController" ng-cloak="">
+    <div class="container marketing" style="margin-top: 100px">
+		
+	  <div class="row">
+           <div class="col-md-3">
+               <div layout:include="layout/common-fragment :: sidebar"></div>
+           </div>
+	    <div class="col-md-9">
+         <div class="panel panel-primary">
+
+            <div class="panel-heading contains-buttons">
+				
+                <div class="btn-group pull-right">
+                    <a type="button" href="#" class="btn btn-default btn-xs"
+                       ng-click="addNewContactModal(lastAddedContactId)">
+                        <span class="glyphicon glyphicon-plus"></span>
+                    </a>
+                </div>
+
+                <p class="text-uppercase"> Emergency Contact </p>
+            </div>
+
+            <div class="panel-body">
+
+                <div class="alert alert-success" ng-show="alert_contact_show">
+                    <button type="button" class="close" data-ng-click="switchBool('alert_contact_show')">×</button>
+                    <strong>Done!</strong> {{successDeletedMessage}}
+                </div>
+
+                <table class="table table-hover table-bordered" style="margin-top: 20px">
+                    <thead>
+                    <tr class="info">
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Title</th>
+                        <th>Email</th>
+                        <th>Work Phone</th>
+                        <th>Cell Phone</th>
+                        <th th:text="#{button.edit}">Edit</th>
+                        <th>Remove</th>
+                    </tr>
+                    </thead>
+                    <tbody> 
+                   <!--  <pre>{{contacts | json}}</pre> -->
+                    <tr ng-repeat="contact in contacts">
+             
+                        <td>{{contact.firstName}}</td>
+                        <td>{{contact.lastName}}</td>
+                        <td>{{contact.title}}</td>
+                        <td>{{contact.email}}</td>
+                        <td>{{contact.workPhone}}</td>
+                        <td>{{contact.cellPhone}}</td>
+                        <td>
+                            <a class="btn" ng-click="editContact(contact);">
+                                <span class="glyphicon glyphicon-edit"></span>
+                            </a>
+                        </td>
+                        <td style="horiz-align:middle;"> 
+                            <a class="btn" ng-really-click="deleteContact(contact.id);">
+                                <span class="glyphicon glyphicon-trash"></span>
+                            </a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+
+        
+
+            <div class="panel-footer clearfix">
+                <div class="pull-right">
+
+                    <a href="#" th:href="@{/user/profile}" class="btn btn-warning">
+                        <span class="glyphicon glyphicon-circle-arrow-left"></span> Back</a>
+
+                    <button type="submit" ng-click="moveToContactPage()" class="btn btn-success"> Continue <span
+                            class="glyphicon glyphicon-circle-arrow-right"></span></button>
+                </div>
+            </div>
+        </div>
+       </div>
+    </div>
+
+</section>
+
+<section layout:fragment="custom-scripts">
+
+   	
+    <script src="/js/ui-bootstrap-tpls-0.12.1.min.js" th:src="@{/js/ui-bootstrap-tpls-0.12.1.min.js}"></script>
+        <script src="/js/profile.js" th:src="@{/js/profile.js}"></script>
+	<script src="/js/directives/delete-confirmation.js" th:src="@{/js/directives/delete-confirmation.js}"></script>
+
+    <script src="/js/showErrors.js" th:src="@{/js/showErrors.js}"></script>
+
+</section>
+
+</body>
+</html>

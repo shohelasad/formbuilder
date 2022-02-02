@@ -1,0 +1,16 @@
+<div class="form-group" ng-class="{'required': field.validator.required}">
+    <label ng-hide="hideLabel" class="control-label col-xs-2">{{field.title}}</label>
+
+    <div class="col-sm-4">
+        <textarea type="text" class="form-control"
+                  name="{{field.name}}"
+                  id="{{field.name}}"
+                  ng-model="field.value"
+                  ng-value="field.value"
+                  ng-maxlength="field.validator.maxLength"
+                  ng-minlength="field.validator.minLength"
+                  ng-pattern="field.validator.pattern"
+                  ng-required="{{field.validator.required}}">
+            </textarea>
+    </div>
+</div>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout/main">
+<head lang="en">
+    <meta charset="UTF-8"/>
+    <title>Registration History</title>
+</head>
+<body>
+<section layout:fragment="content">
+    <div class="container marketing" style="margin-top: 100px">
+        <div class="panel panel-primary">
+            <div class="panel-heading"><span class="text-uppercase">Registration Confirmation</span></div>
+            <div class="panel-body">
+
+                <table class="table table-hover table-bordered">
+                    <thead>
+                    <tr class="info">
+                        <th>Registration is completed successfully!</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+
+                </table>
+
+                <p>Do you want to add this to your profile?</p>
+                <a href="#" th:href="@{/registration/profile}" class="btn btn-warning">
+                    <span class="glyphicon glyphicon-circle"></span> Yes</a>
+
+                <!--   <button type="submit" ng-click="moveToSectionPage()" class="btn btn-success"> No <span
+                       class="glyphicon glyphicon-circle"></span></button> -->
+
+                <a href="#" th:href="@{/registration/list}" class="btn btn-success">
+                    <span class="glyphicon glyphicon-circle"></span> No</a>
+
+            </div>
+        </div>
+    </div>
+</section>
+</body>
+</html>

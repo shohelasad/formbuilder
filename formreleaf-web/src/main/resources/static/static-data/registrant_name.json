@@ -1,0 +1,8 @@
+{
+  "title":"Registrant Name",
+  "fields":[
+    {
+      "fieldType": "textfield", "name": "registrant_name", "title": "Name", "required": true, "value": ""
+    }
+  ]
+}

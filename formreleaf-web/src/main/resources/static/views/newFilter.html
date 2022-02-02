@@ -1,0 +1,116 @@
+<div class="modal-header bg-primary">
+    <h3 class="modal-title"><span class="text-uppercase">Filter By {{filterBy}}</span></h3>
+</div>
+
+<div class="modal-body">
+
+    <form name="myForm" class="form-horizontal" role="form">
+        <div ng-show="filterType == 'program_and_section'">
+            <div ng-repeat="program in reportFilter.programs" style="margin-left: 50px">
+                <label>
+                    <input id="{{program.id}}" type="checkbox" ng-value="program.selected"
+                           ng-model="program.selected"
+                           ng-checked="program.selected"
+                           ng-change="selectAll(program)"/>
+                    &nbsp;&nbsp; {{program.name}}
+                </label>
+
+                <div ng-repeat="section in program.sections" style="margin-left: 50px">
+                    <label>
+                        <input id="{{section.id}}" type="checkbox" ng-value="section.selected"
+                               ng-model="section.selected"
+                               ng-checked="section.selected"/>
+                        &nbsp;&nbsp; {{section.name}}
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div ng-show="filterType == 'registration_date'">
+            <div class="form-group" ng-controller="DatepickerCtrl">
+                <label class="col-sm-3 control-label">Start Date</label>
+
+                <div class="col-sm-6">
+                    <p class="input-group date">
+                        <input type="text" class="form-control" id="openDate"
+                               datepicker-popup="{{format}}"
+                               ng-value="reportFilter.registrationDate.startDate"
+                               ng-required="required"
+                               ng-model="reportFilter.registrationDate.startDate" is-open="opened"
+                               datepicker-options="dateOptions"
+                               close-text="Close"/>
+                        <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="open($event)"><i
+                                class="glyphicon glyphicon-calendar"></i></button>
+                        </span>
+                    </p>
+                </div>
+                <p class="text-danger">{{fieldErrors.openDate}}</p>
+            </div>
+            <div class="form-group" ng-controller="DatepickerCtrl">
+                <label class="col-sm-3 control-label">End Date</label>
+
+                <div class="col-sm-6">
+                    <p class="input-group date">
+                        <input type="text" class="form-control" id="openDate"
+                               datepicker-popup="{{format}}"
+                               ng-value="reportFilter.registrationDate.endDate"
+                               ng-required="required"
+                               ng-model="reportFilter.registrationDate.endDate" is-open="opened"
+                               datepicker-options="dateOptions"
+                               close-text="Close"/>
+                        <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="open($event)"><i
+                                class="glyphicon glyphicon-calendar"></i></button>
+                        </span>
+                    </p>
+                </div>
+                <p class="text-danger">{{fieldErrors.openDate}}</p>
+            </div>
+        </div>
+
+        <div ng-show="filterType == 'approval'">
+            <h4>Approval</h4>
+
+            <div ng-repeat="approval in reportFilter.approvals" style="margin-left: 50px">
+                <label>
+                    <input type="checkbox" ng-value="approval.selected"
+                           ng-model="approval.selected"
+                           ng-checked="approval.selected"/>
+                    &nbsp;&nbsp; {{approval.name}}
+                </label>
+            </div>
+        </div>
+
+        <div ng-show="filterType == 'registrant_name'">
+            <div class="form-group" style="margin: 10px">
+                <input id="registrantsName" type="text" data-ng-model="reportFilter.registrantName"
+                       class="form-control"/>
+            </div>
+            <script type="text/javascript">
+                $(document).ready(function () {
+                    $("#registrantsName").tokenInput("http://shell.loopj.com/tokeninput/tvshows.php", {
+                        onResult: function (results) {
+                            $.each(results, function (index, value) {
+                                value.name = "OMG: " + value.name;
+                            });
+
+                            return results;
+                        }
+                    });
+                });
+            </script>
+
+        </div>
+
+        <div class="modal-footer">
+            <button class="btn btn-warning pull-left" ng-click="cancel()">
+                <span class="glyphicon glyphicon-remove"></span><span class="text-uppercase">Cancel</span>
+            </button>
+
+            <button ng-disabled="myForm.$invalid" type="button" class="btn btn-success" ng-click="ok()">
+                <span class="glyphicon glyphicon-floppy-saved"> </span>&nbsp;<span
+                    class="text-uppercase">Save</span>
+            </button>
+        </div>
+    </form>
+</div>

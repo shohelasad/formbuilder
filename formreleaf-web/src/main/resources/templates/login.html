@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns="http://www.w3.org/1999/xhtml"
+      layout:decorator="layout/main">
+<head>
+    <title>Login</title>
+
+    <style>
+        .body-container{
+            margin-top: 151px;
+        }
+    </style>
+
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="container body-container">
+
+        <!--<div class="panel panel-primary">-->
+
+            <div class="page-title">
+                <h1 class="h1"><span>Login</span></h1>
+            </div>
+
+            <form class="form-horizontal" role="form" th:action="@{/login}" method="post">
+                <div class="panel-body">
+
+                    <div th:switch="${errorType}">
+                        <p class="alert alert-danger" th:case="usernameEmpty">Enter your email address.</p>
+
+                        <p class="alert alert-danger" th:case="badCredential">Incorrect username or password.</p>
+
+                        <p class="alert alert-danger" th:case="userLocked">Your account has been locked. Check your
+                            Email.</p>
+
+                        <p class="alert alert-danger" th:case="userNotActivated">
+                            Your account is not activated yet. Check the mail we have sent to you for activating
+                            your account.
+                            <a th:href="@{user/request-activation-email?email=__${userEmail}__}"> Resend activation
+                                mail </a>
+                        </p>
+
+                    </div>
+
+                    <div th:if="${param.error}" class="alert alert-danger">
+                        Invalid username and password.
+                    </div>
+                    <div th:if="${param.logout}" class="alert alert-success">
+                        You have been logged out.
+                    </div>
+
+                    <div th:if="${param.expired}" class="alert alert-danger">
+                        You session has been expired.
+                    </div>
+
+                    <div class="form-group">
+                        <label for="username" class="col-sm-2 control-label">Email </label>
+
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control" id="username"
+                                   name="username"/>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password" class="col-sm-2 control-label">
+                            Password </label>
+
+                        <div class="col-sm-4">
+                            <input type="password" class="form-control" id="password"
+                                   name="password"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label"></label>
+
+                        <div class="col-xs-4">
+                            <a href="#" th:href="@{/reset-password}">Forget Password?</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel-footer clearfix">
+
+                    <div class="pull-left">
+                        <a href="#" th:href="@{/}" class="btn btn-default"><span
+                                class="glyphicon glyphicon-arrow-left"></span> BACK TO HOME</a>
+                    </div>
+
+                    <div class="pull-right">
+                        <button type="submit" class="btn btn-primary btn-success">
+                            LOG IN <span class="glyphicon glyphicon-ok-sign"></span>
+                        </button>
+                    </div>
+
+                </div>
+            </form>
+        <!--</div>-->
+    </div>
+</div>
+</body>
+</html>

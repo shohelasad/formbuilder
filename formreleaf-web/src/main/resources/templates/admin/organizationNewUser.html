@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org" layout:decorator="layout/main">
+
+<head>
+    <title>Add New User</title>
+</head>
+
+<body>
+<div layout:fragment="content">
+    <div class="container body-container">
+
+        <div class="page-title">
+            <h1 class="h1"> Create new organization user</h1>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <span class="text-uppercase">New Organization </span>
+                    </div>
+
+                    <form class="form-horizontal centered" role="form"
+                          th:action="@{/admin/organization/__${signupForm.slug}__/new-user}"
+                          th:object="${signupForm}" method="post" data-toggle="validator">
+                        <div class="panel-body">
+
+                            <div th:if="${message}" class="alert alert-info">
+                                <p th:text="${message}"></p>
+                            </div>
+
+                            <input type="hidden" id="id" th:value="*{slug}" th:field="*{slug}"/>
+
+                            <div class="form-group required">
+                                <label for="email" class="col-sm-3 control-label"
+                                       th:text="#{label.registrationForm.email}">email</label>
+
+                                <div class="col-sm-4">
+                                    <input type="email" required="required"
+                                           class="form-control" id="email"
+                                           placeholder="Email Address" th:field="*{email}"/>
+                                </div>
+                                <p class="text-danger"
+                                   th:if="${#fields.hasErrors('email')}">
+                                    <span th:errors="*{email}">Required</span>
+                                </p>
+                            </div>
+
+                            <div class="form-group required">
+                                <label class="col-sm-3 control-label"
+                                       th:text="#{label.registrationForm.firstName}">firstname</label>
+
+                                <div class="col-sm-4">
+                                    <input type="text" required="required" class="form-control"
+                                           placeholder="First Name" th:field="*{firstName}"/>
+                                </div>
+                                <p class="text-danger"
+                                   th:if="${#fields.hasErrors('firstName')}">
+                                    <span th:errors="*{firstName}">Required</span>
+                                </p>
+                            </div>
+
+                            <div class="form-group required">
+                                <label class="col-sm-3 control-label"
+                                       th:text="#{label.registrationForm.lastName}">lastname</label>
+
+                                <div class="col-sm-4">
+                                    <input type="text" class="form-control" required="required"
+                                           placeholder="Last Name" th:field="*{lastName}"/>
+                                </div>
+                                <p class="text-danger"
+                                   th:if="${#fields.hasErrors('lastName')}">
+                                    <span th:errors="*{lastName}">Required</span>
+                                </p>
+                            </div>
+
+                            <div class="form-group required">
+                                <label class="col-sm-3 control-label"
+                                       th:text="#{label.registrationForm.password}">password</label>
+
+                                <div class="col-sm-4">
+                                    <input type="password" min="6" max="32" class="form-control" required="required"
+                                           placeholder="Password" th:field="*{password}"/>
+                                </div>
+                                <p class="text-danger"
+                                   th:if="${#fields.hasErrors('password')}">
+                                    <span th:errors="*{password}">Required</span>
+                                </p>
+                            </div>
+
+                            <div class="form-group required">
+                                <label class="col-sm-3 control-label"
+                                       th:text="#{label.registrationForm.passwordConfirmed}">confirmPassword</label>
+
+                                <div class="col-sm-4">
+                                    <input type="password" min="6" max="32" class="form-control"
+                                           required="required" placeholder="Confirm Password"
+                                           th:field="*{passwordConfirmed}"/>
+                                </div>
+                                <p class="text-danger"
+                                   th:if="${#fields.hasErrors('passwordConfirmed')}">
+                                    <span th:errors="*{passwordConfirmed}">Required</span>
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="panel-footer clearfix">
+
+                            <div class="pull-left">
+                                <a href="#" th:href="@{/admin/organization/__${signupForm.slug}__/user-list}"
+                                   class="btn btn-default"><span
+                                        class="glyphicon glyphicon-arrow-left"></span> CANCEL</a>
+                            </div>
+
+                            <div class="pull-right">
+                                <button type="submit" class="btn btn-primary btn-success">
+                                    SAVE <span class="glyphicon glyphicon-ok-sign"></span>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+
+</html>

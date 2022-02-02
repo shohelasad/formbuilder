@@ -1,0 +1,95 @@
+<div class="modal-header bg-primary">
+    <h3 class="modal-title"><span class="text-uppercase">Create new Contact</span></h3>
+</div>
+
+<div class="modal-body">
+
+    <form name="newContact" id="newContact" class="form-horizontal" role="form" data-toggle="validator">
+        <div>
+            <div id="error" class="alert alert-danger" ng-repeat="error in formErrors">
+                <p>{{error}}</p>
+            </div>
+
+            <div class="form-group required">
+                <label class="col-sm-2 control-label">First Name</label>
+
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" id="firstName" ng-model="contact.firstName"
+                           ng-value="contact.firstName" required="required"
+                           placeholder="First Name"/>
+                </div>
+                <p class="text-danger">{{fieldErrors.firstName}}</p>
+            </div>
+
+            <div class="form-group required">
+                <label
+                        class="col-sm-2 control-label">Last Name</label>
+
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" id="lastName"
+                           ng-model="contact.lastName" ng-value="contact.lastName"
+                           required="required" placeholder="Last Name"/>
+                </div>
+                <p class="text-danger">{{fieldErrors.lastName}}</p>
+            </div>
+
+            <div class="form-group required">
+                <label class="col-sm-2 control-label">Title</label>
+
+                <div class="col-sm-6">
+                    <input type="text" class="form-control"
+                           required="required"
+                           ng-model="contact.title" ng-value="contact.title"
+                           placeholder="Title"/>
+                </div>
+                <p class="text-danger">{{fieldErrors.title}}</p>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Work Phone</label>
+
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" id="city"
+                           ng-model="contact.workPhone" ng-value="contact.workPhone"
+                           placeholder="Work Phone"/>
+                </div>
+                <p class="text-danger">{{fieldErrors.workPhone}}</p>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Cell Phone</label>
+
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" id="cellPhone"
+                           ng-model="contact.cellPhone" ng-value="contact.cellPhone"
+                           placeholder="Cell Phone"/>
+                </div>
+                <p class="text-danger">{{fieldErrors.cellPhone}}</p>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Email</label>
+
+                <div class="col-sm-6">
+                    <input type="email" class="form-control" id="email"
+                           ng-model="contact.email"
+                           placeholder="Email"/>
+                </div>
+                <p class="text-danger">{{fieldErrors.email}}</p>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div class="modal-footer">
+    <button class="btn btn-warning pull-left" ng-click="cancel()">
+        <span class="glyphicon glyphicon-remove"></span><span class="text-uppercase"> Cancel</span>
+    </button>
+
+    <img src="/images/loading.gif" alt="waiting" data-ng-show="submitting"/>&#160;&#160;
+    <button type="button" class="btn btn-success" ng-disabled="newContact.$dirty && newContact.$invalid"
+            ng-click="ok()">
+        <span class="glyphicon glyphicon-floppy-saved"> </span>&nbsp;<span
+            class="text-uppercase">Save</span>
+    </button>
+</div>

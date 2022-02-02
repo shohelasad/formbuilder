@@ -1,0 +1,72 @@
+{
+  "id" : 7,
+  "blocks" : [
+    {
+      "id" : 1,
+      "title" : "Insurance",
+      "fields" : [
+        {
+          "id" : "bb1b411b-bc2e-468b-926d-4b5fd103000c",
+          "fieldType" : "textfield",
+          "name" : "insurance_insurance_carrier",
+          "title" : "Carrier",
+          "helpText" : "Please enter carrier name",
+          "selected" : false,
+          "value" : null,
+          "validator" : {
+            "maxLength" : null,
+            "minLength" : null,
+            "required" : true,
+            "pattern" : null,
+            "validationType" : "text",
+            "errorMessage" : null
+          },
+          "options" : [ ]
+        },
+        {
+          "id" : "f763eda0-87f4-4533-862b-50aeddec2d06",
+          "fieldType" : "textfield",
+          "name" : "insurance_insurance_subscriberName",
+          "title" : "Subscriber name ",
+          "helpText" : "Please enter subscriber name",
+          "selected" : false,
+          "value" : null,
+          "validator" : {
+            "maxLength" : null,
+            "minLength" : null,
+            "required" : true,
+            "pattern" : null,
+            "validationType" : "text",
+            "errorMessage" : null
+          },
+          "options" : [ ]
+        },
+        {
+          "id" : "cae015f7-15ac-4400-a4ef-a54c2cc416f2",
+          "fieldType" : "textfield",
+          "name" : "insurance_insurance_groupNumber",
+          "title" : "Group number  ",
+          "helpText" : "Please enter group number ",
+          "selected" : false,
+          "value" : null,
+          "validator" : {
+            "maxLength" : null,
+            "minLength" : null,
+            "required" : true,
+            "pattern" : null,
+            "validationType" : "text",
+            "errorMessage" : null
+          },
+          "options" : [ ]
+        }
+      ]
+    },
+    {
+      "id" : 2,
+      "title" : "Others",
+      "fields" : [ ]
+    }
+  ],
+  "instruction" : null,
+  "title" : "Insurance"
+}

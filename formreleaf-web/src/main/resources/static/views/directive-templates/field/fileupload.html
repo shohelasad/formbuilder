@@ -1,0 +1,35 @@
+<div class="form-group" ng-class="{'required': field.validator.required}">
+    <label ng-hide="hideLabel" class="col-xs-2 control-label">{{field.title}}
+
+    </label>
+
+    <div class="col-sm-4">
+        <div class="input-group">
+            <input name="{{field.name}}"
+                   id="{{field.id}}"
+                   ng-model="field.value"
+                   ng-value="field.value"
+                   ng-required="{{field.validator.required}}"
+                   type="file">
+
+            <p style="color: red"> {{field.validator.errorMessage}}</p>
+
+            <p ng-if="field.documents">
+
+            <div ng-repeat="document in field.documents track by $index">
+                {{$index +1}} . &nbsp; &nbsp;<a ng-href=" {{document.url}}"
+                                                target="_blank">{{document.documentName}}</a>&nbsp;
+                &nbsp;
+                <a class="btn btn-xs btn-danger" ng-click="delete(document.uuid)"><span
+                        class="glyphicon glyphicon-remove"></span></a>
+                <br/>
+            </div>
+            </p>
+        </div>
+
+        <small><br/>(
+            The maximum file upload size is <strong>5.00 MB</strong> and you can upload at most <strong>5 files</strong>.
+            Supported file formats are : pdf, doc, docx, jpg, jpeg, png, xls, xlsx and gif)
+        </small>
+    </div>
+</div>

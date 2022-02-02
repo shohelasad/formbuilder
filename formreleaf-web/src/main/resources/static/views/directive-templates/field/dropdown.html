@@ -1,0 +1,13 @@
+<div class="form-group" ng-class="{'required': field.validator.required}">
+	<label ng-hide="hideLabel" class="control-label col-xs-2">{{field.title}}</label>
+
+	<div class="col-sm-4">
+		<select ng-model="field.value" ng-required="field.required" class="form-control">
+			<option ng-repeat="option in field.options"
+					ng-selected="option.value == field.value"
+					value="{{option.value}}">
+				{{option.title}}
+			</option>
+		</select>
+	</div>
+</div>

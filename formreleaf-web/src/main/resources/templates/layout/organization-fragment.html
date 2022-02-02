@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<body>
+
+<div layout:fragment="date-picker-scripts">
+    <script src="/js/bootstrap-datepicker.js"
+            th:src="@{/js/bootstrap-datepicker.js}"></script>
+
+    <script>
+        $('.show-date-picker').datepicker({
+            format: "dd/mm/yyyy",
+            todayHighlight: true,
+            autoclose: true
+        });
+    </script>
+</div>
+
+<div layout:fragment="pagination">
+    <div class="pager">
+        <ul>
+            <li th:class="${page.firstPage}? 'disabled' : ''">
+                <span th:if="${page.firstPage}">&#8592; First</span>
+                <a th:if="${not page.firstPage}" th:href="@{${page.url}(page=0,size=${page.size})}">&#8592;
+                    First</a>
+            </li>
+            <li th:class="${page.hasPreviousPage}? '' : 'disabled'">
+                <span th:if="${not page.hasPreviousPage}">&laquo;</span>
+                <a th:if="${page.hasPreviousPage}"
+                   th:href="@{${page.url}(page=${page.number - 2},size=${page.size})}"
+                   title="Go to previous page">&laquo;</a>
+            </li>
+            <li th:each="item : ${page.items}" th:class="${item.current}? 'active' : ''">
+                <span th:if="${item.current}" th:text="${item.number}">1</span>
+                <a th:if="${not item.current}"
+                   th:href="@{${page.url}(page=${item.number - 1},size=${page.size})}"><span
+                        th:text="${item.number}">1</span></a>
+            </li>
+            <li th:class="${page.hasNextPage}? '' : 'disabled'">
+                <span th:if="${not page.hasNextPage}">&raquo;</span>
+                <a th:if="${page.hasNextPage}"
+                   th:href="@{${page.url}(page=${page.number},size=${page.size})}"
+                   title="Go to next page">&raquo;</a>
+            </li>
+            <li th:class="${page.lastPage}? 'disabled' : ''">
+                <span th:if="${page.lastPage}">Last &#8594;</span>
+                <a th:if="${not page.lastPage}"
+                   th:href="@{${page.url}(page=${page.totalPages - 1},size=${page.size})}">Last &#8594; </a>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<div layout:fragment="program-breadcrumbs">
+
+    <ul class="nav nav-pills nav-wizard">
+        <li th:classappend="${page == 'overview' ? 'active' : ''}">
+
+            <a th:if="${program != null and program.id != null}" href="#"
+               th:href="@{/program/create/__${program.id}__/overview}"> Program Overview</a>
+            <a th:unless="${program != null and program.id != null}" href="#">Program Overview</a>
+
+            <div class="nav-arrow"></div>
+        </li>
+
+        <li th:classappend="${page == 'location' ? 'active' : ''}">
+            <div class="nav-wedge"></div>
+
+            <a th:if="${program != null and program.id != null}" href="#"
+               th:href="@{/program/create/__${program.id}__/location}"> Contact and Location</a>
+            <a th:unless="${program != null and program.id != null}" href="#">Contact and Location</a>
+
+            <div class="nav-arrow"></div>
+        </li>
+
+        <li th:classappend="${page == 'section' ? 'active' : ''}">
+            <div class="nav-wedge"></div>
+
+            <a th:if="${program != null and program.id != null}" href="#"
+               th:href="@{/program/create/__${program.id}__/section}"> Section</a>
+            <a th:unless="${program != null and program.id != null}" href="#">Sections</a>
+
+            <div class="nav-arrow"></div>
+        </li>
+
+        <li th:classappend="${page == 'participant' ? 'active' : ''}">
+            <div class="nav-wedge"></div>
+            <a th:if="${program != null and program.id != null}" href="#"
+               th:href="@{/program/create/__${program.id}__/participant}"> Participant</a>
+            <a th:unless="${program != null and program.id != null}" href="#">Participant</a>
+
+            <div class="nav-arrow"></div>
+        </li>
+
+        <li th:classappend="${page == 'agreement' ? 'active' : ''}">
+            <div class="nav-wedge"></div>
+            <a th:if="${program != null and program.id != null}" href="#"
+               th:href="@{/program/create/__${program.id}__/agreement}"> Agreement and Policy</a>
+            <a th:unless="${program != null and program.id != null}" href="#"> Agreement and Policy</a>
+
+            <div class="nav-arrow"></div>
+        </li>
+
+        <li th:classappend="${page == 'publish' ? 'active' : ''}">
+            <div class="nav-wedge"></div>
+            <a th:if="${program != null and program.id != null}" href="#"
+               th:href="@{/program/create/__${program.id}__/publish}"> Publishing</a>
+            <a th:unless="${program != null and program.id != null}" href="#">Publishing</a>
+            <div th:if="${program != null and program.id != null}" class="nav-arrow"></div>
+        </li>
+
+        <li th:if="${program != null and program.id != null}">
+            <div class="nav-wedge"></div>
+            <a th:href="@{/programs/__${program.slug}__}" target="_blank"> Preview</a>
+        </li>
+    </ul>
+</div>
+
+<div layout:fragment="sidebar">
+    <style>
+        .sidebar {
+            margin-top: 0px;
+        }
+    </style>
+    <div class="sidebar">
+        <div sec:authorize="isAuthenticated()" class="list-group">
+
+            <a href="#" class="list-group-item active"> <span class="text-uppercase">
+                Manage Account</span> <span class="pull-right" id="slide-submenu"> </span> </a>
+
+            <a sec:authorize="hasRole('ROLE_APPLICATION')" class="list-group-item" th:href="@{/admin/organization/__${organizationForm.slug}__/edit}">
+                <i class="fa fa-info fa-fw"></i>&nbsp;ORGANIZATION INFO<span class="fa arrow"></span>
+            </a> 
+            
+            <a sec:authorize="hasRole('ROLE_APPLICATION')" class="list-group-item" th:href="@{/admin/organization/__${organizationForm.slug}__/user-list}">
+                <i class="fa fa-table fa-fw"></i>&nbsp;ORGANIZATION USER LIST<span class="fa arrow"></span>
+            </a>
+            
+            
+            
+
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

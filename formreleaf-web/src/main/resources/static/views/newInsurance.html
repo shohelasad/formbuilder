@@ -1,0 +1,60 @@
+<div class="modal-header bg-primary">
+    <h3 class="modal-title"><span class="text-uppercase">Create new Insurance</span></h3>
+</div>
+
+<div class="modal-body">
+
+    <form name="newInsurance" id="newInsurance" class="form-horizontal" role="form" data-toggle="validator">
+        <div>
+        	<div id="error" class="alert alert-danger" ng-repeat="error in formErrors">
+                <p>{{error}}</p>
+            </div>
+            <div class="form-group required">
+                <label class="col-sm-2 control-label">Carrier</label>
+
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" id="firstName" ng-model="insurance.carrier"
+                           ng-value="insurance.carrier" required="required"
+                           placeholder="Carrier"/>
+                </div>
+                <p class="text-danger">{{fieldErrors.carrier}}</p>
+            </div>
+
+            <div class="form-group required">
+                <label
+                        class="col-sm-2 control-label">Subscriber Name</label>
+
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" id="subscriberName"
+                           ng-model="insurance.subscriberName" ng-value="insurance.subscriberName"
+                           required="required" placeholder="Subscriber Name"/>
+                </div>
+                <p class="text-danger">{{fieldErrors.subscriberName}}</p>
+            </div>
+
+           
+            <div class="form-group required">
+                <label class="col-sm-2 control-label">Group Member</label>
+
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" id="groupMember"
+                           ng-model="insurance.groupMember"
+                           placeholder="Group Member"/>
+                </div>
+                <p class="text-danger">{{fieldErrors.groupMember}}</p>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div class="modal-footer">
+    <button class="btn btn-warning pull-left" ng-click="cancel()">
+        <span class="glyphicon glyphicon-remove"></span><span class="text-uppercase"> Cancel</span>
+    </button>
+
+    <button type="button" class="btn btn-success" ng-disabled="newInsurance.$dirty && nnewInsurance.$invalid"
+            ng-click="ok()">
+        <span class="glyphicon glyphicon-floppy-saved"> </span>&nbsp;<span
+            class="text-uppercase">Save</span>
+    </button>
+</div>

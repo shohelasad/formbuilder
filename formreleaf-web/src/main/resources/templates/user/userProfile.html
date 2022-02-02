@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org" layout:decorator="layout/main">
+
+<head>
+    <title>Profile</title>
+
+</head>
+
+<body>
+<div layout:fragment="content">
+
+    <div class="container body-container">
+
+        <div class="page-title">
+            <h1 class="h1">User Information</h1>
+        </div>
+
+        <div class="row">
+            <div class="col-md-3">
+                <div layout:include="layout/common-fragment :: sidebar"></div>
+            </div>
+
+            <div class="col-md-9">
+                <div class="panel panel-primary">
+                    <div class="panel-heading"><span class="text-uppercase">User Information</span></div>
+
+                    <form class="form-horizontal" role="form" th:action="@{/user/profile}"
+                          th:object="${userForm}" method="post">
+                        <div class="panel-body">
+                            <fieldset>
+
+                                <div th:if="${message}" class="alert alert-info">
+                                    <p th:text="${message}"></p>
+                                </div>
+                                
+                                <input type="hidden" id="id" th:value="*{id}" th:field="*{id}"/>
+                            
+                                <div class="form-group">
+                                    <label for="email" class="col-sm-3 control-label"
+                                           th:text="#{label.registrationForm.email}">Email</label>
+
+                                    <div class="col-sm-4">
+                                        <input type="text" class="form-control" id="email" th:readonly="true"
+                                               placeholder="email" th:field="*{email}"/>
+                                    </div>
+                                    <p class="text-danger"
+                                       th:if="${#fields.hasErrors('email')}">
+                                        <span th:errors="*{email}">Required</span>
+                                    </p>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="firstname" class="col-sm-3 control-label"> First Name</label>
+
+                                    <div class="col-sm-4">
+                                        <input type="text" class="form-control" id="firstName"
+                                               placeholder="first name" th:field="*{firstName}"/>
+                                    </div>
+                                    <p class="text-danger"
+                                       th:if="${#fields.hasErrors('firstName')}">
+                                        <span th:errors="*{firstName}">Required</span>
+                                    </p>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="firstname" class="col-sm-3 control-label">Last Name</label>
+
+                                    <div class="col-sm-4">
+                                        <input type="text" class="form-control" id="lastName"
+                                               placeholder="last name" th:field="*{lastName}"/>
+                                    </div>
+                                    <p class="text-danger"
+                                       th:if="${#fields.hasErrors('lastName')}">
+                                        <span th:errors="*{lastName}">Required</span>
+                                    </p>
+                                </div>
+
+                            </fieldset>
+                        </div>
+
+                        <div class="panel-footer clearfix">               
+
+                            <div class="pull-right">
+                                <button type="submit" class="btn btn-primary btn-success">
+                                    SAVE CHANGES <span class="glyphicon glyphicon-ok-sign"></span>
+                                </button>
+                            </div>
+
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+</body>
+
+</html>

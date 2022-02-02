@@ -1,0 +1,18 @@
+{ "fields" : [ { "fieldType" : "radio",
+        "name" : "approve_id",
+        "options" : [ 
+            { "id" : "1",
+              "title" : "Approved",
+              "value" : "APPROVED"
+            },
+            { "id" : "2",
+              "title" : "Not Approved",
+              "value" : "NOT APPROVED"
+            }
+          ],
+        "required" : true,
+        "title" : "Approval Status",
+        "value" : ""
+      } ],
+  "title" : "Approval Status"
+}

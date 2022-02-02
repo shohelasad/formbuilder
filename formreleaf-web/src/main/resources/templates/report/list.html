@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org" layout:decorator="layout/main">
+
+<head>
+    <title>Reports</title>
+</head>
+
+<body>
+
+<section layout:fragment="content" ng-app="sportsRegApp">
+
+    <div class="container body-container">
+
+        <div class="page-title">
+            <h1 class="h1">Report</h1>
+            <div style="margin: 10px; float: right;">
+                <a type="button" class="btn btn-default pull-right" th:href="@{/report/create}">
+                    <i class="fa fa-plus-square-o"></i> New Report
+                </a>
+            </div>
+        </div>
+
+        <div  ng-controller="ReportController" ng-cloak="">
+            
+            	<div th:if="${message}" class="alert alert-info">
+                    <p th:text="${message}"></p>
+                </div>
+
+                <span ng-show="!reports.length" style="margin: 20px"> No Report found! Create a new report?
+                </span>
+
+                <table ng-show="reports.length> 0" class="table table-hover table-bordered">
+
+                    <thead>
+                    <tr class="info">
+                        <th>Report Name</th>
+                        <th>Modified Date</th>
+                        <th>Registrations</th>
+                        <th style="width: 20%">Action</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="report in reports">
+                        <td style="margin-left: 30px">
+                            <strong> {{report.name}} </strong> <br/>
+                        </td>
+                        <td style="margin-left: 30px">
+                            <strong>{{report.lastModifiedDate | date:'medium'}}</strong> <br/>
+                        </td>
+
+                        <td  style="margin-left: 30px; text-align: center">
+                            <strong>{{report.registrationCount}}</strong> <br/>
+                        </td>
+
+                        <td style="width: 10%; vertical-align:middle;">
+
+                            <div class="btn-group">
+                                <a type="button" class="btn btn-default btn-sm" ng-href="/report/edit/{{report.id}}">
+                                    <span class="glyphicon glyphicon-edit"></span> Edit
+                                </a>
+
+                                <button type="button" class="btn btn-default btn-sm dropdown-toggle"
+                                        data-toggle="dropdown">
+                                    <span class="caret"></span>
+                                </button>
+
+                                <ul class="dropdown-menu" role="menu">
+
+                                    <li role="presentation">
+                                        <a href="/api/v1/report/download-csv/{{report.id}}">
+                                            <span class="glyphicon glyphicon-download-alt"></span>&nbsp;&nbsp;Download
+                                            CSV
+                                        </a>
+                                    </li>
+
+                                    <li role="presentation">
+                                        <a href="/api/v1/report/download-pdf/{{report.id}}">
+                                            <span class="glyphicon glyphicon-download-alt"></span>&nbsp;&nbsp;Download
+                                            PDF
+                                        </a>
+                                    </li>
+
+                                    <li role="presentation">
+                                        <a href="/report/{{report.id}}/share/list">
+                                            <span class="glyphicon glyphicon-share-alt"></span>&nbsp;&nbsp;
+                                            Share
+                                        </a>
+                                    </li>
+                                    <li role="separator" class="divider"></li>
+
+                                    <li role="presentation">
+                                        <a role="menuitem" ng-really-click="deleteReport(report.id)">
+                                            <span class="glyphicon glyphicon-remove"></span>&nbsp;&nbsp;Delete
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            <!--</div>-->
+        </div>
+
+    </div>
+</section>
+
+<section layout:fragment="custom-scripts">
+    <script src="/js/controllers/report.controller.js" th:src="@{/js/controllers/report.controller.js}"></script>
+    <script src="/js/service/report.service.1.0.js" th:src="@{/js/service/report.service.1.0.js}"></script>
+</section>
+
+</body>
+</html>

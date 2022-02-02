@@ -1,0 +1,22 @@
+<div class="form-group">
+    <label class="col-sm-2 control-label">{{field.title}} </label>
+
+    <div class="col-sm-2">
+        <div id="{{field.name}}" data-toggle="buttons-radio" class="btn-group" ng-controller="ToggleButtonCtrl">
+            <button ng-model="field.value" ng-value="field.concernedYes" class="btn"
+                    ng-class="{'btn-success active': field.concernedYes}"
+                    type="button" name="{{field.name}}" btn-radio="field.value" ng-click="toggle(field)"><i
+                    class="icon-white icon-ok"></i>Yes
+            </button>
+            <button ng-model="field.value" ng-value="field.concernedYes" class="btn"
+                    ng-class="{'btn-danger active': !field.concernedYes}"
+                    type="button" name="{{field.name}}" btn-radio="field.value" ng-click="toggle(field)"><i
+                    class="icon-white icon-remove"></i>No
+            </button>
+        </div>
+    </div>
+
+    <div ng-show="field.concernedYes">
+        <field-directive field="field" hide-label="true"></field-directive>
+    </div>
+</div>

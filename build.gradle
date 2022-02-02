@@ -1,0 +1,35 @@
+
+buildscript {
+    ext {
+        springBootVersion = spring_boot_version
+    }
+
+    repositories {
+        mavenLocal()
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    }
+}
+
+allprojects {
+	repositories {
+        mavenLocal()
+		mavenCentral()
+	}
+}
+
+subprojects {
+
+    repositories {
+        mavenLocal()
+        mavenCentral()
+    }
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.1'
+}
+
+

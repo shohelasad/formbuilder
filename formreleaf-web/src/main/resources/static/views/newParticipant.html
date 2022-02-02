@@ -1,0 +1,65 @@
+<div class="modal-header bg-primary">
+    <h3 class="modal-title"><span class="text-uppercase">{{profileType}}</span></h3>
+</div>
+
+<div class="modal-body" ng-cloak="">
+
+    <form name="participantForm" id="participantForm" class="form-horizontal" role="form" data-toggle="validator">
+
+        <div ng-show="profileType == 'concern' || profileType =='medication'">
+            <div ng-show="participants != null && participants.length > 0">
+                <div class="form-group">
+                    <label class="col-xs-2 control-label">Select Participant</label>
+
+                    <div class="col-sm-4">
+                        <select class="form-control"
+                                ng-options="item as item.name for item in participants"
+                                ng-model="item"
+                                ng-change="selectParticipantName(item.name)">
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div ng-show="participants == null && participants.length == 0">
+                <div ng-show="participants != null && participants.length > 0">
+                    <div class="form-group">
+                        <label class="col-xs-2 control-label">Select Participant</label>
+
+                        <div class="col-sm-4">
+                            <input class="form-control" ng-model="selectedParticipant"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div ng-repeat="block in section.blocks">
+            <div class="panel panel-default" ng-show="(block.fields).length > 0">
+                <div class="panel-heading">{{block.title}}</div>
+                <div class="panel-body" style="margin-left: 5px">
+
+                    <div ng-repeat="field in fields = (block.fields)">
+                        <div ng-if="field.concerned">
+                            <yes-no-field-directive field="field"></yes-no-field-directive>
+                        </div>
+                        <div ng-if="!field.concerned">
+                            <field-directive field="field"></field-directive>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </form>
+</div>
+
+<div class="modal-footer">
+    <button class="btn btn-warning pull-left" ng-click="cancel()">
+        <span class="glyphicon glyphicon-remove"></span><span class="text-uppercase">Cancel</span>
+    </button>
+
+    <button type="button" class="btn btn-success" ng-click="ok()">
+        <span class="glyphicon glyphicon-floppy-saved"> </span>&nbsp;<span
+            class="text-uppercase">Save</span>
+    </button>
+</div>

@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org" layout:decorator="layout/main">
+
+<head>
+    <title>Location and Contact :: Program </title>
+    <link href="/css/program-breadcrumbs.css?version=1.0" th:href="@{/css/program-breadcrumbs.css?version=1.0}" rel="stylesheet"/>
+</head>
+
+<body th:with="page='location'">
+
+<section layout:fragment="content">
+
+    <div class="container body-container" ng-app="sportsRegApp" ng-cloak="">
+
+        <input type="hidden" name="programId" th:value="${program.id}"/>
+
+        <div layout:include="layout/common-fragment :: program-breadcrumbs"></div>
+
+        <div class="panel panel-primary" ng-controller="LocationController">
+            <div class="panel-heading">
+
+                <div class="btn-group pull-right">
+                    <a type="button" href="#" class="btn btn-default btn-xs"
+                       ng-click="addLocationToProgram()">
+                        <span class="glyphicon glyphicon-plus"></span>
+                    </a>
+                </div>
+                <span class="text-uppercase">Location Information</span>
+            </div>
+
+            <div class="panel-body">
+
+                <div class="alert alert-success" ng-show="alertLocationSuccess">
+                    <button type="button" class="close" data-ng-click="switchBool('alertLocationSuccess')">×</button>
+                    <strong>Done! </strong> <span ng-bind-html="successMessage"/>
+                </div>
+
+                <div class="alert alert-danger" ng-show="alertLocationFailure">
+                    <button type="button" class="close" data-ng-click="switchBool('alertLocationFailure')">×</button>
+                    <strong>Error! </strong> <span ng-bind-html="errorMessage"/>
+                </div>
+
+                <div style="margin: 20px">
+					<span ng-show="!forms.length"
+                          style="margin-left: 20px"> No Location found! Add one?
+					</span>
+                </div>
+
+                <table ng-show="forms.length> 0" class="table table-hover table-bordered">
+                    <thead>
+                    <tr class="info">
+                        <th>Name</th>
+                        <th>Address</th>
+                        <th>City</th>
+                        <th>State</th>
+                        <th>Country</th>
+                        <th>Edit</th>
+                        <th>Remove</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="form in forms">
+                        <td>{{form.name}}</td>
+                        <td>{{form.addressLine1}}</td>
+                        <td>{{form.city}}</td>
+                        <td>{{form.state}}</td>
+                        <td>{{form.country}}</td>
+                        <td>
+                            <a class="btn" ng-click="editLocation(form);">
+                                <span class="glyphicon glyphicon-edit"></span>
+                            </a>
+                        </td>
+                        <td style="horiz-align:middle;">
+                            <a class="btn" ng-really-click="deleteLocation(form);">
+                                <span class="glyphicon glyphicon-trash"></span>
+                            </a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+
+            </div>
+
+        </div>
+
+        <div class="panel panel-primary" style="margin-top: 20px" ng-controller="ContactController">
+            <div class="panel-heading contains-buttons">
+                <div class="btn-group pull-right">
+                    <a type="button" href="#" class="btn btn-default btn-xs"
+                       ng-click="addContactToProgram()">
+                        <span class="glyphicon glyphicon-plus"></span>
+                    </a>
+                </div>
+
+                <span class="text-uppercase">Contact Information</span>
+            </div>
+
+            <div class="panel-body">
+
+                <div class="alert alert-success" ng-show="alertContactSuccess">
+                    <button type="button" class="close" data-ng-click="switchBool('alertContactSuccess')">×</button>
+                    <strong>Done! </strong> <span ng-bind-html="successMessage"/>
+                </div>
+
+                <div class="alert alert-danger" ng-show="alertContactFailure">
+                    <button type="button" class="close" data-ng-click="switchBool('alertContactFailure')">×</button>
+                    <strong>Error! </strong> <span ng-bind-html="errorMessage"/>
+                </div>
+
+                <div style="margin: 20px">
+					<span ng-show="!contacts.length"
+                          style="margin-left: 20px"> No Contact found! Add one?
+                    </span>
+                </div>
+
+                <table ng-show="contacts.length > 0" class="table table-hover table-bordered">
+                    <thead>
+                    <tr class="info">
+                        <th> First Name</th>
+                        <th> Last Name</th>
+                        <th> Email</th>
+                        <th> Work Phone</th>
+                        <th> Cell Phone</th>
+                        <th> Edit</th>
+                        <th> Remove</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="contact in contacts">
+                        <td>{{contact.firstName}}</td>
+                        <td>{{contact.lastName}}</td>
+                        <td>{{contact.email}}</td>
+                        <td>{{contact.workPhone}}</td>
+                        <td>{{contact.cellPhone}}</td>
+                        <td>
+                            <a class="btn" ng-click="editContact(contact);">
+                                <span class="glyphicon glyphicon-edit"></span>
+                            </a>
+                        </td>
+                        <td>
+                            <a class="btn" ng-really-click="deleteContact(contact);">
+                                <span class="glyphicon glyphicon-trash"></span>
+                            </a>
+                        </td>
+
+                    </tr>
+                    </tbody>
+                </table>
+
+            </div>
+
+            <div class="panel-footer clearfix">
+
+                <div class="pull-left">
+                    <a class="btn btn-warning" th:if="${program != null and program.id != null}" href="#"
+                       th:href="@{/program/create/__${program.id}__/overview}"> <span class="glyphicon glyphicon-circle-arrow-left"></span> Back</a>
+                </div>
+
+                <div class="pull-right">
+                    <button type="button" ng-click="moveToSectionPage()" class="btn btn-success"> Continue <span
+                            class="glyphicon glyphicon-circle-arrow-right"></span></button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+
+<section layout:fragment="custom-scripts">
+    <script th:src="@{/js/controllers/location-controller.js}"></script>
+    <script th:src="@{/js/controllers/contact-controller.js}"></script>
+    <script src="/js/service/country-service.js" th:src="@{/js/service/country-service.js}"></script>
+    <script src="/js/service/state-directive.js" th:src="@{/js/service/state-service.js}"></script>
+    <script src="/js/service/program.service.js?version=1.0" th:src="@{/js/service/program.service.js?version=1.0}"></script>
+</section>
+
+</body>
+</html>

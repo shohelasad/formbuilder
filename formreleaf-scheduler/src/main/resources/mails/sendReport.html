@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:remove="all">FormReleaf Email</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <style type="text/css">
+        @media only screen and (max-device-width: 480px) {
+            .mobile-only {
+                width: auto !important;
+                height: auto !important;
+                overflow: visible !important;
+                line-height: normal !important;
+                font-size: inherit !important;
+                mso-hide: all;
+            }
+
+            .desktop-only {
+                display: none !important;
+            }
+
+            body {
+                min-width: 100% !important;
+                padding: 0;
+                margin: 0;
+            }
+
+            #center-content-table {
+                max-width: none;
+            !important;
+            }
+
+            #header-pattern-container {
+                padding: 10px 10px 10px 10px !important;
+                line-height: 20px !important;
+            }
+
+            #header-avatar-image-container {
+                padding-right: 8px !important;
+            }
+
+            #email-content-container {
+                padding: 0 !important;
+            }
+
+            .mobile-expand {
+                border-radius: 0 !important;
+                border-left: 0 !important;
+                border-right: 0 !important;
+                padding-left: 26px !important;
+            }
+
+            .mobile-resize-text {
+                font-size: 16px !important;
+                line-height: 22px !important;
+            }
+
+            #page-title-pattern-header {
+                font-size: 20px !important;
+                line-height: 28px !important;
+            }
+
+            #page-title-pattern-icon-image-container-cell {
+                padding-top: 7px !important;
+            }
+
+            #inline-user-pattern {
+                display: block !important;
+            }
+
+            #inline-user-pattern-avatar {
+                padding-top: 3px !important;
+            }
+
+            .contextual-area-pattern {
+                border-bottom: 1px solid #ccc !important;
+                padding: 15px 10px 0 10px !important;
+            }
+
+            .users-involved-pattern-column-table {
+                width: 100% !important;
+            }
+
+            .users-involved-pattern-avatar-table-cell {
+                padding: 3px 5px 5px 0 !important;
+            }
+
+            .users-involved-pattern-column-container {
+                padding-right: 0 !important;
+            }
+
+            .contextual-excerpt-pattern, #users-involved-pattern {
+                border: 0 !important;
+            }
+
+            #content-excerpt-pattern-container, #contextual-excerpt-pattern-text-container {
+                font-size: 16px !important;
+                line-height: 22px !important;
+            }
+
+            #content-excerpt-pattern-container h1, #contextual-excerpt-pattern-text-container h1 {
+                font-size: 24px !important;
+                line-height: 28px !important;
+            }
+
+            #content-excerpt-pattern-container h2, #contextual-excerpt-pattern-text-container h2 {
+                font-size: 20px !important;
+                line-height: 28px !important;
+            }
+
+            #content-excerpt-pattern-container h3, #contextual-excerpt-pattern-text-container h3 {
+                font-size: 18px !important;
+                line-height: 24px !important;
+            }
+
+            #content-excerpt-pattern-container h4, #contextual-excerpt-pattern-text-container h4 {
+                font-size: 16px !important;
+                line-height: 22px !important;
+            }
+
+            #content-excerpt-pattern-container h5, #contextual-excerpt-pattern-text-container h5 {
+                font-size: 14px !important;
+                line-height: 20px !important;
+            }
+
+            #content-excerpt-pattern-container h6, #contextual-excerpt-pattern-text-container h6 {
+                font-size: 14px !important;
+                line-height: 20px !important;
+            }
+
+            .user-mention {
+                line-height: 18px !important;
+            }
+
+            #footer-pattern {
+                padding: 15px 10px !important;
+            }
+
+            #footer-pattern-logo-desktop-container {
+                padding: 0 !important;
+            }
+
+            #footer-pattern-logo-desktop {
+                width: 0 !important;
+                height: 0 !important;
+            }
+
+            #footer-pattern-logo-mobile {
+                padding-top: 10px !important;
+                width: 30px !important;
+                height: 27px !important;
+                display: inline !important;
+            }
+
+            #footer-pattern-text {
+                display: block !important;
+            }
+
+            #footer-pattern-links-container {
+                line-height: 0 !important;
+            }
+
+            .footer-pattern-links.mobile-resize-text,
+            .footer-pattern-links.mobile-resize-text,
+            #footer-pattern-text.mobile-resize-text,
+            #footer-pattern-links-container.no-footer-links {
+                font-size: 14px !important;
+                line-height: 20px !important;
+            }
+
+            .footer-link {
+                display: block !important;
+            }
+
+            #footer-pattern-links-container table {
+                display: inline-block !important;
+                float: none !important;
+            }
+
+            #footer-pattern-links-container, #footer-pattern-text {
+                text-align: center !important;
+            }
+
+            #footer-pattern-links {
+                padding-bottom: 5px !important;
+            }
+
+            .mail-calendar-container .day-header + table tr td:first-child {
+                vertical-align: top !important;
+                padding-top: 5px !important;
+            }
+        }
+
+        @media (min-width: 900px) {
+            #center-content-table {
+                width: 900px;
+            }
+        }
+
+        @media all {
+            #outlook a {
+                padding: 0;
+            }
+
+            body {
+                -webkit-text-size-adjust: 100%;
+                -ms-text-size-adjust: 100%;
+            }
+
+            .ExternalClass {
+                width: 100%;
+            }
+
+            #background-table {
+                margin: 0;
+                padding: 0;
+                width: 100% !important;
+            }
+
+            .grey a {
+                color: #707070;
+                text-decoration: none;
+            }
+        }
+
+        #logo {
+            background: transparent url('../img/logo.formreleaf-02.png') no-repeat center !important;
+            background-position: fixed;
+            width: 211px;
+            height: 37px;
+            display: inline-block;
+            overflow: hidden;
+            text-indent: -1000px;
+        }
+    </style>
+
+</head>
+
+<body>
+<table id="background-table" cellpadding="0" cellspacing="0" width="100%"
+       style="border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt; color: #333; background-color: #f5f5f5">
+    <tbody>
+    <tr>
+        <td id="email-content-container" class="email-content-top-padding"
+            style="padding: 0px; border-collapse: collapse; padding: 0 20px; padding-top: 20px">
+            <table id="email-content-table" cellspacing="0" cellpadding="0" border="0" width="100%"
+                   style="border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt; color: #333; border-spacing: 0; border-collapse: separate">
+                <tbody>
+                <tr>
+                    <td class="email-content-rounded-top mobile-expand"
+                        style="padding: 0px; border-collapse: collapse; color: #fff; padding: 0 15px 0 16px; height: 15px; background-color: #fff; border-left: 1px solid #ccc; border-top: 1px solid #ccc; border-right: 1px solid #ccc; border-bottom: 0; border-top-right-radius: 5px; border-top-left-radius: 5px">
+                        &nbsp;</td>
+                </tr>
+                <tr th:if="${mailTitle}">
+                    <td class="email-content-main mobile-expand"
+                        style="padding: 0px; border-collapse: collapse; border-left: 1px solid #ccc; border-right: 1px solid #ccc; border-top: 0; border-bottom: 0; padding: 0 15px 15px 16px; background-color: #fff">
+                        <table class="notification-comment-pattern" cellspacing="0" cellpadding="0" border="0"
+                               width="100%"
+                               style="border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt; color: #333; font-family: Arial, sans-serif; font-size: 14px; line-height: 20px; mso-line-height-rule: exactly; mso-text-raise: 2px">
+                            <tbody>
+                            <tr>
+                                <td class="notification-comment-pattern-container mobile-resize-text"
+                                    th:text="${mailTitle}"
+                                    style="padding: 0px; border-collapse: collapse; padding: 0px; color:#333333; font-size: 20px;">
+                                    Welcome to FormReleaf.com!
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="email-content-main mobile-expand padding-top border-top"
+                        style="padding: 0px; border-collapse: collapse; border-left: 1px solid #ccc; border-right: 1px solid #ccc; border-top: 0; border-bottom: 0; padding: 0 15px 15px 16px; background-color: #fff; border-top: 1px solid #ccc; padding-top: 15px">
+                        <div>
+
+                            Hello, <br/><br/>
+
+                            This message was generated automatically by FormReleaf®.<br/><br/>
+
+                            The owner of this agent can be contacted by email: "patrick.murphy@vantage.com"<br/>
+
+                            Please see the attached file.<br/><br/>
+
+                            If you have any questions please feel free to contact support at "FormReleaf support <span th:text="${supportPhone}"></span>" or <span th:text="${supportEmail}"></span>. <br/>
+
+                            <br/><br/>
+                            Sincerely,<br/>
+
+                            The FormReleaf Team
+                        </div>
+
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="email-content-rounded-bottom mobile-expand"
+                        style="padding: 0px; border-collapse: collapse; color: #fff; height: 5px; line-height: 5px; padding: 0 15px 0 16px; background-color: #fff; border-bottom-right-radius: 5px; border-bottom-left-radius: 5px; border-top: 0; border-left: 1px solid #ccc; border-bottom: 1px solid #ccc; border-right: 1px solid #ccc; mso-line-height-rule: exactly">
+                        &nbsp;</td>
+                </tr>
+                </tbody>
+            </table>
+        </td>
+    </tr>
+
+    <tr>
+        <td id="footer-pattern" style="padding: 0px; border-collapse: collapse; padding: 12px 20px">
+            <table id="footer-pattern-container" cellspacing="0" cellpadding="0" border="0"
+                   width="100%"
+                   style="border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt; color: #333">
+                <tbody>
+                <tr>
+                    <td id="footer-pattern-links-container" class="no-footer-links" width="100%"
+                        style="padding: 0px; border-collapse: collapse; color: #999; font-size: 12px; line-height: 18px; font-family: Arial, sans-serif; mso-line-height-rule: exactly; mso-text-raise: 2px">
+                        This message was sent to you by Vantage Labs, LLC.
+                    </td>
+                    <td id="footer-pattern-logo-desktop-container"
+                        rowspan="2" valign="top"
+                        style="padding: 0px; border-collapse: collapse; padding-left: 20px; vertical-align: top">
+                        <table style="border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt; color: #333">
+                            <tbody>
+                            <tr>
+                                <td id="footer-pattern-logo-desktop-padding"
+                                    style="padding: 0px; border-collapse: collapse; padding-top: 3px">
+                                    <img id="footer-pattern-logo-desktop"
+                                         src="logo-java.png" th:src="'cid:' + ${imageResourceName}"
+                                         alt="FormReleaf Logo" title="FormReleaf Logo"
+                                         class="image_fix"/>
+
+                                    <div id="logo"></div>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

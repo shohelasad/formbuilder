@@ -1,0 +1,8 @@
+{
+  "title":"Registration Date",
+  "fields":[
+    {"fieldType": "date", "name": "fromDate", "title": "From Date" , "required": true, "value":""},
+    {"fieldType": "date", "name": "toDate", "title": "To Date" , "required": true, "value":""}
+  ]
+}
+

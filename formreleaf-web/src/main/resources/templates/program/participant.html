@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org" layout:decorator="layout/main">
+
+<head>
+    <title> Participant Information </title>
+
+    <link href="/css/program-breadcrumbs.css?version=1.0" th:href="@{/css/program-breadcrumbs.css?version=1.0}" rel="stylesheet"/>
+</head>
+
+<body th:with="page='participant'">
+<section layout:fragment="content">
+    <div class="container body-container">
+
+        <div layout:include="layout/common-fragment :: program-breadcrumbs"></div>
+
+        <div ng-app="sportsRegApp" ng-controller="FormGeneratorController" ng-cloak="">
+
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <span class="text-uppercase"><strong>Participant Information</strong></span>
+                </div>
+
+                <div class="panel-body" style="margin: 0; padding: 0">
+
+                    <div th:if="${message}" class="alert alert-info">
+                        <p th:text="${message}"></p>
+                    </div>
+
+                    <div id="error" class="alert alert-danger" ng-repeat="error in formErrors">
+                        <p>{{error}}</p>
+                    </div>
+
+                    <div ng-if="message" class="alert alert-info">
+                        <p>{{message}}</p>
+                    </div>
+
+                    <div ng-repeat="section in form.sections">
+                        <fieldset>
+
+                            <div class="panel-subheading"><h3 class="h3">{{section.title}}</h3></div>
+                            <br/>
+
+                            <div class="form-group col-xs-12">
+                                <textarea class="form-control"
+                                          placeholder="Provide explanation or instructions. Optional"
+                                          ng-model="section.instruction"></textarea>
+                            </div>
+
+                            <div ng-repeat="block in section.blocks">
+                                <div class="col-xs-4">
+                                    <div class="panel panel-default ">
+                                        <div class="panel-heading contains-buttons">
+                                            <div class="btn-group pull-right">
+
+                                                <a href="#" ng-click="addNewField(block, section)"
+                                                   class="btn btn-default btn-xs"><span
+                                                        class="glyphicon glyphicon-plus"></span></a>
+                                            </div>
+
+                                            <p class="text-uppercase"><strong>
+                                                {{block.title}}</strong>
+                                            </p>
+                                        </div>
+
+                                        <div class="panel-body">
+
+                                            <div class="table-responsive">
+                                                <table class="table borderless">
+                                                    <tr ng-repeat="field in block.fields">
+                                                        <td>
+                                                            <label><input type="checkbox" ng-model="field.selected"
+                                                                          value=""/>&nbsp;{{field.title}}</label>
+                                                        </td>
+                                                        <td ng-show="field.selected">
+                                                            <label><input type="checkbox" value=""
+                                                                          ng-model="field.validator.required"/> &nbsp;Required</label>
+                                                        </td>
+                                                        <td ng-show="field.custom">
+                                                            <a href="#" ng-click="editField(field, block, section)">
+                                                                <i class="fa fa-pencil"></i>
+                                                            </a>
+                                                            &nbsp;
+                                                            <a href="#" ng-really-click="removeField(block, field)">
+                                                                <i class="fa fa-trash-o"></i>
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </fieldset>
+                    </div>
+                </div>
+
+                <div class="panel-footer clearfix">
+
+                    <form id="programForm" role="form" th:object="${program}">
+
+                        <input type="hidden" th:field="*{id}"/>
+
+                        <div class="pull-left">
+
+                            <a th:if="${program != null and program.id != null}" href="#" class="btn btn-warning"
+                               th:href="@{/program/create/__${program.id}__/section}">  <span class="glyphicon glyphicon-circle-arrow-left"></span> Back</a>
+                        </div>
+
+                        <div class="pull-right">
+                            <button ng-click="save()" class="btn btn-success text-uppercase">Save <span
+                                    class="glyphicon glyphicon-circle-arrow-right"></span>
+                            </button>
+
+                            <button ng-click="saveAndContinue()" class="btn btn-success text-uppercase">
+                                Save And Continue <span class="glyphicon glyphicon-circle-arrow-right"></span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<div layout:fragment="custom-scripts">
+    <script src="/js/controllers/form-controller.js?version=1.0"
+            th:src="@{/js/controllers/form-controller.js?version=1.0}"></script>
+    <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.0/js/bootstrap-toggle.min.js"></script>
+</div>
+
+</body>
+</html>

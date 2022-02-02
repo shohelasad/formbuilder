@@ -1,0 +1,13 @@
+<div class="form-group" ng-class="{'required': field.validator.required}">
+    <label ng-hide="hideLabel" class="col-xs-2 control-label">{{field.title}} </label>
+
+    <div class="col-sm-4">
+        <div ng-repeat="option in field.options" class="row-fluid">
+            <label class="radio-inline">
+                <input type="radio" name="{{field.name}}" id="{{option.id}}" value="{{option.value}}"
+                       ng-model="field.value"/>
+                &nbsp;<span ng-bind="option.title"></span>
+            </label>
+        </div>
+    </div>
+</div>

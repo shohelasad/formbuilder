@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org" layout:decorator="layout/main">
+
+<head>
+    <title>Share List</title>
+</head>
+
+<body>
+
+<section layout:fragment="content">
+
+    <div class="container body-container" ng-app="sportsRegApp"
+         ng-controller="ReportScheduleDeleteController">
+
+        <div th:if="${message}" class="alert alert-info">
+            <p th:text="${message}"></p>
+        </div>
+
+        <div class="page-title">
+            <p class="h1"> Share List (<span th:text="${reportName}"></span>) </p>
+
+            <div style="margin-right: 10px; margin-top: 10px; float: right">
+                <a type="button" href="#" class="btn btn-default btn-sm" th:href="@{/report/__${reportId}__/share}">
+                    <span class="glyphicon glyphicon-plus"></span> New
+                </a>
+            </div>
+        </div>
+
+        <table class="table table-hover table-bordered">
+            <thead>
+            <tr class="info">
+                <th>Report</th>
+                <th>Recipients</th>
+                <th>Frequency</th>
+                <th>Report Format</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Last Run Date &amp; Time</th>
+                <th>Total Run</th>
+                <th>#</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="item, iterStat : ${schedules}" th:class="${iterStat.odd}? 'odd'">
+                <td>
+                    <a th:href="@{/report/edit/__${item.report.id}__}">
+                        <span th:text="${item.report.name}"></span>
+                    </a>
+                </td>
+                <td th:text="${item.getRecipients()}"></td>
+                <td>
+                    <span th:if="${item.reportSharingFrequency != null}"
+                          th:text="${item.reportSharingFrequency.label}">
+                    </span>
+                </td>
+                <td>
+                     <span th:if="${item.reportFormat != null}"
+                           th:text="${item.reportFormat.label}">
+                    </span>
+                </td>
+                <td>
+                    <span th:text="${item.startDate} ? ${#dates.format(item.startDate,'MM/dd/yyyy')}"></span>
+                </td>
+                <td>
+                    <span th:text="${item.endDate} ? ${#dates.format(item.endDate,'MM/dd/yyyy')}"></span></td>
+                <td>
+                    <span th:text="${item.lastRunDate} ? ${#dates.format(item.lastRunDate,'MM/dd/yyyy hh:mm a')}"></span>
+                </td>
+                <td th:text="${item.runCount}"></td>
+                <td style="width: 10%; vertical-align:middle;">
+
+                    <div class="btn-group">
+                        <a th:href="@{/report/share/__${item.id}__/edit}"
+                           type="button" class="btn btn-default btn-sm">
+                            <span class="glyphicon glyphicon-edit"></span> Edit
+                        </a>
+
+                        <button type="button" class="btn btn-default btn-sm dropdown-toggle"
+                                data-toggle="dropdown">
+                            <span class="caret"></span>
+                        </button>
+
+                        <ul class="dropdown-menu" role="menu">
+
+                            <li role="presentation">
+                                <a th:href="@{/report/share/__${item.id}__/edit}">
+                                    <span class="glyphicon glyphicon-edit"></span>&nbsp;&nbsp;Edit
+                                </a>
+                            </li>
+
+                            <li role="presentation">
+                                <a href="#" th:attr="ng-click='shareNow(\''+${item.id}+'\');'">
+                                    <span class="glyphicon glyphicon-share"></span>&nbsp;&nbsp;Share Now
+                                </a>
+                            </li>
+
+                            <li role="presentation">
+                                <a href="#"
+                                   th:attr="ng-really-click='deleteReportSchedule(\''+${item.id}+'\');'">
+                                    <span class="glyphicon glyphicon-remove"></span>&nbsp;&nbsp;Remove
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</section>
+
+<div layout:fragment="custom-scripts">
+    <script type="application/javascript">
+        app.controller("ReportScheduleDeleteController", function ($scope, $q, $http, $window, $log) {
+
+            $scope.deleteReportSchedule = function (id) {
+                var url = "/report/share/" + id + "/delete";
+                var response = $http.post(url, []);
+
+                response.success(function (data) {
+                    $window.location.reload(true);
+                })
+            };
+
+            $scope.shareNow = function (id) {
+                $log.debug("shareNow");
+
+                var deferred = $q.defer();
+                var url = "/report/share/" + id + "/now";
+
+                $http.post(url, [])
+                        .success(function (data, status, headers, config) {
+                            deferred.resolve(data);
+                        })
+                        .error(function (data, status, headers, config) {
+                            deferred.reject(data);
+                        });
+
+                deferred.promise.then(function () {
+                    $window.location.reload(true);
+                });
+            };
+        });
+    </script>
+</div>
+
+</body>
+</html>

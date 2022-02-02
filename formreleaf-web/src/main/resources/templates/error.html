@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      layout:decorator="layout/main">
+
+<head>
+    <title>Application Error</title>
+
+    <style>
+        h2 {
+            font-size: 65px;
+            font-weight: normal;
+            color: #C6C6C6;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+<section layout:fragment="content">
+    <div class="container body-container">
+
+        <div class="page-title">
+            <h1 class="h1">  Oops!!</h1>
+        </div>
+
+        <h3>There has been an error in processing your request. We are aware of this!<br/> Please,<a th:href="@{/}">Go back home? </a> </h3>
+    </div>
+</section>
+</body>
+</html>

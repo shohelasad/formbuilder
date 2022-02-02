@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org" layout:decorator="layout/main">
+
+<head>
+    <title>Reports</title>
+    <link rel="stylesheet" th:href="@{/css/scroll-bar/perfect-scrollbar.min.css}"
+          href="/css/scroll-bar/perfect-scrollbar.min.css"/>
+
+    <style>
+
+        #leftPanel {
+            height: 600px;
+            overflow: auto;
+        }
+
+        #rightPanel {
+            height: 600px;
+            overflow: auto;
+        }
+    </style>
+</head>
+
+<body>
+
+<section layout:fragment="content" ng-app="sportsRegApp" ng-controller="ReportDefinitionController" ng-cloak="">
+    <div class="container body-container">
+
+        <div class="page-title">
+            <h1 class="h1">Report</h1>
+        </div>
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <p class="text-uppercase"> Create a new report </p>
+            </div>
+            <input id="reportId" type="hidden" th:value="${reportId}"/>
+            <br/>
+
+            <div id="errorBlock" class="alert alert-danger" ng-show="formErrors.length>0">
+                <button type="button" class="close" data-dismiss="alert" ng-click="clearErrors()"
+                        aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <p ng-repeat="error in formErrors">
+                    <strong>Error !</strong> {{error}}
+                </p>
+            </div>
+
+            <div class="panel-body">
+                <form name="reportTemaplate" id="reportTemaplate" class="form-horizontal" role="form">
+                    <div class="form-group">
+                        <div class="col-sm-5">
+                            <input type="text" class="form-control" id="name" name="name" ng-model="reportFilter.name"
+                                   ng-value="reportFilter.name" placeholder="Report name" required="required"/>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-sm-5">
+                            <select ng-change="filterItem()" ng-model="selected_option" class="form-control"
+                                    id="filterType" name="filterType" data-behaviour="select">
+                                <option value="" selected="selected">Select a filter</option>
+                                <option value="program_and_section">Programs and Sections</option>
+                                <option value="registration_date">Registration date</option>
+                                <option value="approval">Approval</option>
+                                <option value="registrant_name">Registrant name</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class='form-group'>
+                        <div class="col-sm-12">
+                            <div class='applied-filters'>
+                                <div class="panel panel-default">
+                                    <h5><span class='title'>&nbsp;&nbsp; <strong>Results will be filtered
+                                        by:</strong></span></h5>
+
+                                    <div class="panel-body">
+
+                                        <div ng-if="hasSelectedProgram(reportFilter.programs).length>0">
+                                            <div ng-repeat="program in reportFilter.programs"
+                                                 ng-show="([program] | filter:programFilter).length>0">
+                                                <strong> Program:</strong> {{program.name}} <br/>
+
+                                                <div ng-repeat="section in (program.sections | filter:{selected:true})">
+                                                    <div style="padding-right: 20px"><strong> Section:</strong>
+                                                        {{section.name}}<br/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                                <span><a ng-click="editFilterItem('program_and_section')"><span
+                                                        class="glyphicon glyphicon-pencil"></span></a>
+                                                    <a ng-click="removePrograms()"><span
+                                                            class="glyphicon glyphicon-remove"></span></a>
+                                                </span>
+                                            <hr/>
+                                        </div>
+
+                                        <div ng-if="findSelectedApprovals(reportFilter.approvals).length> 0">
+                                            <strong>Approvals: </strong>
+                                            <span ng-repeat="appoval in reportFilter.approvals | filter:{selected:true}">
+                                                <span>{{appoval.name}}</span> ,
+                                            </span>
+                                            <span><a ng-click="editFilterItem('approval')"><span
+                                                    class="glyphicon glyphicon-pencil"></span> </a>
+                                                    <a ng-click="removeApprovalFilter()"><span
+                                                            class="glyphicon glyphicon-remove"></span></a>
+                                                </span>
+                                            <hr/>
+                                        </div>
+
+                                        <div ng-if="reportFilter.registrationDate != null">
+
+                                            <strong>Registration Date:</strong> From:
+                                            {{reportFilter.registrationDate.startDate | date : format : 'shortDate'}} -
+                                            To: {{reportFilter.registrationDate.endDate | date : format : 'shortDate'}}
+
+                                            <span><a ng-click="editFilterItem('registration_date')"><span
+                                                    class="glyphicon glyphicon-pencil"></span> </a>
+                                                    <a ng-click="removeDateFilter()"><span
+                                                            class="glyphicon glyphicon-remove"></span></a>
+                                                </span>
+                                            <hr/>
+                                        </div>
+
+                                        <div ng-if="reportFilter.registrantName != null">
+                                            <div><strong>Registrant's name:</strong> {{reportFilter.registrantName}}
+                                                    <span><a ng-click="editFilterItem('registrant_name')"><span
+                                                            class="glyphicon glyphicon-pencil"></span> </a>
+                                                    <a ng-click="removeRegistrantName()"><span
+                                                            class="glyphicon glyphicon-remove"></span></a>
+                                                </span>
+                                            </div>
+                                            <hr/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <legend></legend>
+            <div class="panel-body">
+                <div class="col-md-5">
+                    <div class="panel panel-primary">
+
+                        <div class="panel-heading clearfix">
+                            <h4 class="panel-title pull-left text-uppercase" style="padding-top: 7.5px;">
+                                Choose Fields</h4>
+
+                            <div class="input-group checkbox pull-right">
+                                <label class="text-uppercase">
+                                    <input type="checkbox" ng-model="checkedAll"
+                                           ng-checked="checkedAll"
+                                           ng-change="onCheckChange()"/>Select All
+                                </label>
+                            </div>
+                        </div>
+
+                        <div id="leftPanel" class="panel-body wrapper">
+
+                            <div ng-repeat="block in reportFilter.selectedBlocks">
+                                <div class="panel panel-info">
+                                    <div class="panel-heading clearfix">
+                                        <div class="input-group checkbox pull-left">
+                                            <label class="text-uppercase">
+                                                <input type="checkbox" ng-model="checkList[$index]"
+                                                       ng-checked="checkList[$index]"
+                                                       ng-change="selectAll(block, $index)"/>
+                                                <span ng-if="block.sectionName.length > 0"> {{block.sectionName}} - </span>
+                                                        {{block.blockName}}
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                    <div class="panel-body" style="margin-left: 10px">
+                                        <div ng-repeat="field in fields = (block.fields)">
+                                            <input id="{{field.id}}" type="checkbox" ng-value="field.selected"
+                                                   ng-model="field.selected"
+                                                   ng-checked="field.selected"/>
+                                            &nbsp;&nbsp; {{field.name}}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-7">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <p class="text-uppercase"> Order Fields </p>
+                        </div>
+                        <div id="rightPanel" class="panel-body wrapper">
+                            <div style="margin-left: 25px">
+                                <div ng-repeat="block in reportFilter.selectedBlocks">
+                                    <div ng-repeat="field in fields = (block.fields | filter:{selected:true})">
+                                        <span ng-if="block.sectionName.length > 0"> {{block.sectionName}} - </span>
+                                        {{block.blockName}} - {{field.name}}
+                                        <hr/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-footer clearfix">
+                <div class="pull-right">
+
+                    <a type="button" class="btn btn-danger right text-uppercase" ng-href="/report/list">
+                        <span class="glyphicon glyphicon-circle-arrow-left"></span> Cancel
+                    </a>
+
+                    <button ng-disabled="reportTemaplate.$invalid" class="btn btn-success right text-uppercase"
+                            type="button" ng-click="saveReport()">
+                        Save <span class="glyphicon glyphicon-circle-arrow-right"></span>
+                    </button>
+
+                    <button ng-disabled="reportTemaplate.$invalid" class="btn btn-success right text-uppercase"
+                            type="button" ng-click="saveAndShare()">
+                        Save And Share<span class="glyphicon glyphicon-circle-arrow-right"></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section layout:fragment="custom-scripts">
+    <script src="/js/controllers/report.defination.controller.js?version=1.2"
+            th:src="@{/js/controllers/report.defination.controller.js?version=1.2}"></script>
+    <script src="/js/service/report.service.1.0.js" th:src="@{/js/service/report.service.1.0.js}"></script>
+    <script src="/js/scroll-bar/perfect-scrollbar.min.js" th:src="@{/js/scroll-bar/perfect-scrollbar.min.js}"></script>
+</section>
+
+</body>
+</html>

@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org" layout:decorator="layout/main">
+
+<head>
+    <title>Publish Program</title>
+
+    <link href="/css/program-breadcrumbs.css?version=1.0" th:href="@{/css/program-breadcrumbs.css?version=1.0}" rel="stylesheet"/>
+    <link href="/css/bootstrap-datepicker3.min.css" th:href="@{/css/bootstrap-datepicker3.min.css}" type="text/css"/>
+
+</head>
+
+<body th:with="page='publish'">
+<section layout:fragment="content">
+    <div class="container body-container">
+
+        <div layout:include="layout/common-fragment :: program-breadcrumbs"></div>
+
+        <div class="panel panel-primary">
+
+            <div class="panel-heading"><span class="text-uppercase">Publishing</span></div>
+
+            <div class="form-horizontal" ng-app="sportsRegApp" ng-controller="PublishController" th:object="${program}"
+                 ng-cloak="">
+
+                <div class="panel-body">
+                    <input name="programId" type="hidden" th:value="${program.id}"/>
+
+                    <fieldset>
+                        <div th:if="${message}" class="alert alert-info">
+                            <p th:text="${message}"></p>
+                        </div>
+
+                        <div ng-show="errors.errors.length > 0 || errors.fieldErrors.length > 0" id="error"
+                             class="alert alert-danger alert-dismissable">
+                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true"> &times;
+                            </button>
+                            <div ng-repeat="error in errors.errors">
+                                <p><strong>Error!</strong> {{error}}</p>
+                            </div>
+                            <div ng-repeat="error in errors.fieldErrors">
+                                <p><strong>Error!</strong> {{error}}</p>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div ng-controller="DatepickerCtrl">
+
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">Do you want to open registration?</label>
+
+                                    <p>
+                                        <input type="radio" name="registration.yes" ng-value="true"
+                                               ng-model="publish.registrationOpened"/> Yes
+                                        <input type="radio" name="registration.no" ng-value="false"
+                                                ng-model="publish.registrationOpened"/> No
+                                    </p>
+                                </div>
+
+                                <div ng-show="publish.registrationOpened">
+                                    <div class="form-group required">
+                                        <label class="col-sm-3 control-label">Registration Open Date</label>
+
+                                        <div class="col-sm-5" id="date-container">
+                                            <p class="input-group date">
+                                                <input type="text" class="form-control" id="openDate"
+                                                       datepicker-popup="{{format}}"
+                                                       ng-value="publish.registrationOpenDate"
+                                                       required="required"
+                                                       ng-model="publish.registrationOpenDate" is-open="opened"
+                                                       min-date="minDate" max-date="publish.registrationCloseDate"
+                                                       datepicker-options="dateOptions"
+                                                       ng-required="true" close-text="Close"/>
+
+													<span class="input-group-btn">
+												<button type="button" class="btn btn-default" ng-click="open($event)"><i
+                                                        class="glyphicon glyphicon-calendar"></i></button>
+											</span>
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group required">
+                                        <label class="col-sm-3 control-label">Registration Close Date</label>
+
+                                        <div class="col-sm-5" id="date-container">
+                                            <p class="input-group date">
+                                                <input type="text" class="form-control" id="closeDate"
+                                                       datepicker-popup="{{format}}"
+                                                       ng-value="publish.registrationCloseDate"
+                                                       required="required"
+                                                       ng-model="publish.registrationCloseDate" is-open="opened1"
+                                                       min-date="publish.registrationOpenDate" max-date="maxDate"
+                                                       datepicker-options="dateOptions"
+                                                       ng-required="true" close-text="Close"/>
+
+													<span class="input-group-btn">
+												<button type="button" class="btn btn-default" ng-click="open1($event)">
+                                                    <i class="glyphicon glyphicon-calendar"></i></button>
+											</span>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr/>
+
+                            <div class="form-group">
+                                <div ng-controller="DatepickerCtrl">
+                                    <div class="form-group">
+                                        <label class="col-sm-3 control-label">Do you want to publish it?</label>
+
+                                        <p>
+                                            <input type="radio" name="publish.yes" ng-value="true"
+                                                   ng-model="publish.programOpened"/> Yes
+                                            <input type="radio" name="publish.no" ng-value="false"
+                                                   ng-model="publish.programOpened"/> No
+                                        </p>
+                                    </div>
+
+                                    <div ng-show="publish.programOpened">
+                                        <div class="form-group required">
+                                            <label class="col-sm-3 control-label">Publish Start Date</label>
+
+                                            <div class="col-sm-5" id="date-container">
+                                                <p class="input-group date">
+                                                    <input type="text" class="form-control"
+                                                           datepicker-popup="{{format}}"
+                                                           ng-value="publish.publishStartDate"
+                                                           required="required"
+                                                           ng-model="publish.publishStartDate" is-open="opened"
+                                                           min-date="minDate" max-date="publish.publishEndDate"
+                                                           datepicker-options="dateOptions"
+                                                           ng-required="true" close-text="Close"/>
+
+													<span class="input-group-btn">
+												<button type="button" class="btn btn-default" ng-click="open($event)"><i
+                                                        class="glyphicon glyphicon-calendar"></i></button>
+											</span>
+                                                </p>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group required">
+                                            <label class="col-sm-3 control-label">Publish End Date</label>
+
+                                            <div class="col-sm-5" id="date-container">
+                                                <p class="input-group date">
+                                                    <input type="text" class="form-control"
+                                                           datepicker-popup="{{format}}"
+                                                           ng-value="publish.publishEndDate"
+                                                           required="required"
+                                                           ng-model="publish.publishEndDate" is-open="opened1"
+                                                           min-date="publish.publishStartDate" max-date="maxDate"
+                                                           datepicker-options="dateOptions"
+                                                           ng-required="true" close-text="Close"/>
+
+													<span class="input-group-btn">
+												<button type="button" class="btn btn-default" ng-click="open1($event)">
+                                                    <i class="glyphicon glyphicon-calendar"></i></button>
+											</span>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </fieldset>
+                </div>
+
+                <div class="panel-footer clearfix">
+
+                    <div class="pull-left">
+                        <a th:if="${program != null and program.id != null}" href="#" class="btn btn-warning"
+                           th:href="@{/program/create/__${program.id}__/agreement}">
+                            <span class="glyphicon glyphicon-circle-arrow-left"></span> Back</a>
+                    </div>
+                    <div class="pull-right">
+
+                        <button class="btn btn-success right" type="button" ng-click="publishProgram(publish)">
+                            Save <span class="glyphicon glyphicon-circle-arrow-right"></span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+
+<section layout:fragment="custom-scripts">
+    <script src="/js/controllers/publish-controller.js?version=1.0" th:src="@{/js/controllers/publish-controller.js?version=1.0}"></script>
+    <script src="/js/controllers.js" th:src="@{/js/controllers.js}"></script>
+    <script src="/js/service/program.service.js?version=1.0" th:src="@{/js/service/program.service.js?version=1.0}"></script>
+</section>
+</body>
+</html>

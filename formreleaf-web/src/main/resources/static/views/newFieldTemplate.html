@@ -1,0 +1,129 @@
+<div class="modal-header bg-primary">
+    <h3 class="modal-title"><span class="text-uppercase"> Create a new custom field</span></h3>
+</div>
+
+<div class="modal-body">
+
+    <div ng-show="error != null" class="alert alert-danger" style="margin-left: 20px">
+    <a class="close" data-dismiss="alert">×</a>
+        <strong>Error!</strong> {{error}} .
+    </div>
+
+    <form name="newFieldForm" id="newFieldForm" class="form-horizontal" role="form" data-toggle="validator">
+
+        <div class="form-group">
+            <label class="col-xs-3 control-label">Field Type</label>
+
+            <div class="col-xs-7">
+                <select ng-model="addField.fieldType" class="form-control" required="required" ng-change="onChange()"
+                        ng-options="type.name as type.value for type in types">
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-xs-3 control-label">Title</label>
+
+            <div class="col-xs-7">
+                <input ng-model="addField.title" class="form-control" required="required"/>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-xs-3 control-label">Help Text</label>
+
+            <div class="col-xs-7">
+                <input ng-model="addField.helpText" class="form-control"/>
+            </div>
+        </div>
+
+        <div ng-show="showAddOptions(addField)">
+
+            <div ng-repeat="option in addField.options">
+                <div class="form-group">
+                    <label class="col-xs-4 control-label">Option # {{option.id}}</label>
+
+                    <div class="input-group col-xs-4">
+                        <input type="text" class="form-control" ng-model="option.title" value="{{option.title}}"/>
+
+                        <span class="input-group-btn">
+                            <button class="btn btn-danger" ng-click="deleteOption(addField, option)">
+                                <span class="glyphicon glyphicon-trash"></span>
+                            </button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-sm-offset-3 col-sm-7">
+                    <a href="javascript:;" class="btn btn-xs btn-info"
+                       ng-click="addOption(addField);">
+                        <span class="glyphicon glyphicon-plus-sign"></span> Add Option
+                    </a>
+                </div>
+            </div>
+
+        </div>
+        <div class="form-group">
+            <label class="col-xs-3 control-label">Required </label>
+
+            <div class="col-xs-6">
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" ng-value="true" ng-model="addField.validator.required"/>This field is
+                        required
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <div ng-show="showAdvanceValidationOption(addField);" class="form-group">
+            <label class="col-xs-4 control-label">
+                <a href="#" ng-click="toggleAdvanceValidation();$event.preventDefault();$event.stopPropagation();">Advance
+                    Validation</a></label>
+        </div>
+
+        <div ng-show="advance">
+            <hr/>
+            <div class="form-group">
+                <label class="col-xs-3 control-label">Max Length </label>
+
+                <div class="col-xs-6">
+                    <input type="number" class="form-control" ng-value="addField.validator.maxLength"
+                           ng-model="addField.validator.maxLength"/>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-xs-3 control-label">Min Length </label>
+
+                <div class="col-xs-6">
+
+                    <input type="number" class="form-control" ng-value="addField.validator.minLength"
+                           ng-model="addField.validator.minLength"/>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-xs-3 control-label"> Type </label>
+
+                <div class="col-xs-6">
+                    <select ng-model="addField.validator.validationType" class="form-control"
+                            ng-options="type.name as type.value for type in inputTypes"></select>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div class="modal-footer">
+    <button class="btn btn-warning pull-left" ng-click="cancel()">
+        <span class="glyphicon glyphicon-remove"></span><span class="text-uppercase"> Cancel</span>
+    </button>
+
+    <button type="button" class="btn btn-success" ng-disabled="newFieldForm.$dirty && newFieldForm.$invalid"
+            ng-click="ok()">
+        <span class="glyphicon glyphicon-floppy-saved"> </span>&nbsp;<span
+            class="text-uppercase">Save Custom Field</span>
+    </button>
+</div>

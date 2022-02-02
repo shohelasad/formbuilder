@@ -1,0 +1,18 @@
+apply plugin: 'java'
+//apply plugin: 'spring-boot'
+
+dependencies {
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa', version: spring_boot_version
+    compile project(":formreleaf-domain")
+
+    //full text search
+    compile 'org.hibernate:hibernate-search:5.3.0.Final'
+    compile 'org.hibernate:hibernate-entitymanager:4.3.10.Final'
+    compile 'org.hibernate:hibernate-search-infinispan:5.3.0.Final'
+    compile group: 'joda-time', name: 'joda-time', version: joda_time_version
+    compile 'org.jadira.usertype:usertype.core:4.0.0.GA'
+
+    compile(group: 'com.zaxxer', name: 'HikariCP', version: hikari_cp_version) {
+        exclude(module: 'tools')
+    }
+}

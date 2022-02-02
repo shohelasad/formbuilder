@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org" layout:decorator="layout/main">
+
+<head>
+    <title>Registrant Single</title>
+
+    <style>
+        .table-user-information > tbody > tr {
+            border-top: 1px solid rgb(221, 221, 221);
+        }
+
+        .table-user-information > tbody > tr:first-child {
+            border-top: 0;
+        }
+
+        .table-user-information > tbody > tr > td {
+            border-top: 0;
+        }
+
+        .dl-horizontal dt {
+            white-space: normal;
+        }
+
+        .table tbody > tr > td.vert-align {
+            vertical-align: middle;
+        }
+    </style>
+</head>
+
+<body>
+
+<section layout:fragment="content">
+
+    <div class="container body-container" ng-app="sportsRegApp"
+         ng-controller="RegistrationSingleViewController"
+         ng-cloak="">
+
+        <div th:if="${message}" class="alert alert-info">
+            <p th:text="${message}"></p>
+        </div>
+
+        <div class="page-title">
+
+            <div class="formreleaf-btn btn-group btn-group pull-right" role="group">
+                <a ng-show="!isOrganization"
+                   th:if="${registration.registrationStatus != null and #strings.toString(registration.registrationStatus).toUpperCase() == 'INCOMPLETE'}"
+                   class="btn btn-sm btn-danger"
+                   th:attr="ng-really-click='deleteRegistration(\''+${registration.id}+'\');'">
+                    <span class="glyphicon glyphicon-trash"></span>&nbsp;Delete
+                </a>
+
+                <a ng-show="!isOrganization"
+                   th:if="${registration.registrationApproval !=null and #strings.toString(registration.registrationApproval).toUpperCase() == 'NONE'}"
+                   th:href="@{/edit-registration/__${registration.program.slug}__?registrationId=__${registration.id}__}"
+                   class="btn btn-sm btn-default"><span class="glyphicon glyphicon-edit"></span>&nbsp; Edit</a>
+
+                <a ng-show="isOrganization"
+                   th:if="${registration.registrationApproval != null and #strings.toString(registration.registrationApproval).toUpperCase() != 'APPROVED'}"
+                   class="btn btn-sm btn-default"
+                   th:attr="ng-click='viewSectionEdit(\''+ ${registration.id}+'\',\''+ ${registration.program.id}+'\');'">
+                    <span class="glyphicon glyphicon-edit"></span> Change Section
+                </a>
+
+                <a class="btn btn-sm btn-default"
+                   th:attr="ng-click='viewParticipant(\''+ ${registration.id}+'\',\''+ ${registration.program.id}+'\');'">
+                    <span class="glyphicon glyphicon-open"></span> &nbsp; Details
+                </a>
+
+            </div>
+
+            <h1 class="h1"><strong> Summary</strong></h1>
+        </div>
+
+        <input hidden="hidden" id="programId" th:value="${registration.program.id}"/>
+        <input hidden="hidden" id="registrationId" th:value="${registration.id}"/>
+
+        <div>
+            <table class="table">
+                <thead>
+                <tr class="info">
+                    <th>Registration Status:
+                        <strong>
+	                            	<span class="text-danger" th:if="${registration.registrationStatus != null}"
+                                          th:text="${registration.registrationStatus.label}"> Completed
+	                                 </span>
+                        </strong>
+	                            <span th:if="${#strings.toString(registration.registrationApproval).toUpperCase() != 'NONE'}">
+		                            &nbsp; Approval : 
+		                            <strong>
+		                            	<span class="text-danger" th:if="${registration.registrationApproval != null}"
+                                              th:text="${registration.registrationApproval.label}"> Approved
+		                                </span>
+                                    </strong>
+	                            </span>
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td></td>
+                </tr>
+                </tbody>
+            </table>
+
+            <table class="table table-user-information">
+                <tbody>
+                <tr>
+                    <td><strong>Participant Name </strong></td>
+                    <td th:text="${registration.registrantName}"></td>
+                </tr>
+
+                <tr>
+                    <td><strong>Registration Date</strong></td>
+                    <td th:text="${#dates.format(registration.registrationDate, 'MMMM dd, yyyy')}"></td>
+                </tr>
+
+                <tr>
+                    <td><strong>Organization</strong></td>
+                    <td>
+                        <a th:href="@{/organizations/__${registration.program.organization.slug}__}">
+                            <span th:text="${registration.program.organization.name}"></span>
+                        </a>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td><strong>Program</strong></td>
+                    <td>
+                        <a th:href="@{/organizations/__${registration.program.organization.slug}__/programs/__${registration.program.slug}__}">
+                            <span th:text="${registration.program.name}"></span>
+                        </a>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td><strong>Sections</strong></td>
+
+                    <td th:each="section, iterStat : ${registration.sections}"
+                        th:class="${iterStat.odd}? 'odd'">
+                        <span th:text="${section.name}"></span> &nbsp;
+                        <span th:text="${#dates.format(section.openDate, 'MMMM dd, yyyy')}"></span> To
+                        <span th:text="${#dates.format(section.closeDate, 'MMMM dd, yyyy')}"></span> &nbsp;
+                        Space Remaining: &nbsp;<span th:text="${section.spaceLimit}"></span> &nbsp;
+                        Space Price: <span th:text="${section.price}"></span> $
+                    </td>
+                </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+        <div ng-show="editSection">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <span class="text-uppercase">Change Section</span>
+                </div>
+
+                <div class="panel-body">
+                    <div class="form-group">
+
+                        <label class="col-sm-2 control-label">Section</label>
+
+                        <div class="col-sm-7">
+                            <select ng-model="section" class="form-control" id="section" name="section"
+                                    data-behaviour="select">
+                                <option data-ng-repeat="section in sections" value="{{section}}">
+                                    {{section.name}}&nbsp;
+                                    {{section.openDate | date}} to {{section.closeDate | date}} &nbsp;
+                                    Space Limit: {{section.spaceLimit | number}} &nbsp;
+                                    Price: {{section.price}} $
+                                </option>
+                            </select>
+                        </div>
+
+                    </div>
+                    <br/>
+
+                    <div ng-show="editSection" class="form-group">
+                        <button ng-click="changeSection()" class="btn btn-success pull-right">Save Change</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div ng-show="formData != null">
+            <div ng-repeat="section in formData.sections">
+
+                <div ng-show="hasFieldsInBlocks(section)" class="panel panel-primary">
+                    <div class="panel-heading contains-buttons">
+                        <h3 class="panel-title text-uppercase"> {{section.title}}</h3>
+                    </div>
+
+                    <div ng-repeat="block in section.blocks">
+
+                        <div ng-show="(block.fields | filter:{selected:true}).length > 0 &amp;&amp; !block.allowMultiple">
+
+                            <div class="panel-subheading"><h3 class="h3"> {{block.title}}</h3></div>
+
+                            <table class="table">
+                                <tr style="margin: 10px" ng-repeat="field in fields = (block.fields | filter:{selected:true})">
+                                    <td style="width: 20%" class="vert-align"><strong>{{field.title}}</strong></td>
+
+                                    <td style="width: 70%; margin-left: 10px" ng-if="field.concerned">
+                                        <table style="width: inherit">
+                                            <tr ng-if="field.concernedYes == true">
+                                                <td style="width: 10%; margin: 5px"><strong>YES</strong></td>
+                                                <td style="margin-left: 10px">{{field.value}}</td>
+                                            </tr>
+                                            <tr ng-if="!field.concernedYes">
+                                                <td style="width: 10%"><strong>NO</strong></td>
+                                            </tr>
+                                        </table>
+                                    </td>
+
+                                    <td style="width: 70% margin-left: 10px" ng-if="field.concerned == undefined">
+                                        <div ng-switch="field.fieldType">
+                                            <div ng-switch-when="fileupload">
+                                                <div ng-repeat="document in field.documents track by $index">
+                                                    {{$index+1}}. &nbsp;&nbsp; <a ng-href=" {{document.url}}"
+                                                                                  target="_blank"><i
+                                                        class="fa fa-download"></i>&nbsp; {{document.documentName}}</a>
+                                                    <br/>
+                                                </div>
+                                            </div>
+                                            <div ng-switch-when="date">
+                                                {{field.value | date:'MM/dd/yyyy'}}
+                                            </div>
+                                            <div ng-switch-default="">
+                                                {{field.value}}
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+
+                        <div ng-show="block.allowMultiple">
+                            <table class="table">
+                                <thead>
+                                <th ng-repeat="field in fields = (block.fields | filter:{selected:true})">
+                                    {{field.title}}
+                                </th>
+                                </thead>
+                                <tbody>
+                                <tr ng-repeat="items in block.multiFields">
+
+                                    <td ng-repeat="item in (items | filter:{selected:true})">
+                                        <p ng-if="item.documents &amp;&amp; item.documents.length > 0">
+
+                                        <div ng-repeat="document in item.documents track by $index">
+                                            {{$index +1}} . &nbsp; &nbsp;<a ng-href=" {{document.url}}"
+                                                                            target="_blank">{{document.documentName}}</a>&nbsp;
+                                        </div>
+                                        </p>
+                                        <div ng-if="!item.documents">
+                                            {{item.value}}
+                                        </div>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div>
+            <div ng-show="policies.length> 0" class="panel panel-primary">
+                <div class="panel-heading">
+                    <span class="text-uppercase">Policies</span>
+                </div>
+                <div class="panel-body">
+                    <table class="table" ng-repeat="policy in policies">
+                        <tr>
+                            <td>
+                                <p><strong>{{policy.title}}</strong></p>
+
+                                <div ng-bind-html="policy.details"></div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div>
+            <div class="panel panel-primary" ng-show="signatures.length > 0">
+                <div class="panel-heading">
+                    <span class="text-uppercase">Agreements</span>
+                </div>
+
+                <div class="panel-body">
+
+                    <div id="agreement">
+                        <table class="table" ng-repeat="signature in signatures">
+                            <tr>
+                                <td>
+                                    <p><strong>{{signature.agreement.title}}</strong></p>
+
+                                    <div ng-bind-html="signature.agreement.details"></div>
+
+                                    <div class="pull-left">
+
+                                        <img id='signature' ng-src='{{signature.sign}}'
+                                             style="border: dashed #F0F0F0 5px" alt="Opps! signature not loading"/>
+                                        <hr/>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div ng-show="isOrganization">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <span class="text-uppercase">Status</span>
+                </div>
+
+                <div class="panel-body">
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Approval</label>
+
+                        <div class="col-sm-7">
+                            <select ng-model="registrationApproval" class="form-control"
+                                    ng-options="r.name for r in registrationApprovals"></select>
+                        </div>
+                    </div>
+                    <br/>
+
+                    <div class="form-group">
+                        <button ng-click="changeStatus()" class="btn btn-success pull-right">Save Change</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</section>
+
+<div layout:fragment="custom-scripts">
+    <script src="/js/controllers/registrant-single-controller.js?version=1.1"
+            th:src="@{/js/controllers/registrant-single-controller.js?version=1.1}"></script>
+    <script src="/js/service/registration.service.js?version=1.2"
+            th:src="@{/js/service/registration.service.js?version=1.2}"></script>
+    <script src="/js/service/program.service.js?version=1.0" th:src="@{/js/service/program.service.js?version=1.0}"></script>
+    <script src="/js/service/user.service.js?version=1.0" th:src="@{/js/service/user.service.js?version=1.0}"></script>
+    <script src="/js/underscore.js" th:src="@{/js/underscore.js}"></script>
+</div>
+
+</body>
+</html>
