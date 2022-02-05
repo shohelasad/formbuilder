@@ -1,7 +1,0 @@
-include 'formreleaf-domain'
-include 'formreleaf-dao'
-include 'formreleaf-web'
-include 'formreleaf-report'
-include 'formreleaf-scheduler'
-include 'formreleaf-common'
-
